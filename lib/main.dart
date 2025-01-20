@@ -1,7 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:site_assessment/firebase_options.dart';
 import 'package:site_assessment/src/features/authentication/views/login/login.dart';
 import 'package:site_assessment/src/features/authentication/views/forgot_password/Email.dart';
 import 'package:site_assessment/src/features/authentication/views/forgot_password/OTP.dart';

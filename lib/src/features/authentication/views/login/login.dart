@@ -15,22 +15,49 @@ class LoginScreen extends StatefulWidget {
 class _LoginState extends State<LoginScreen> {
   final TextEditingController colorController = TextEditingController();
   final TextEditingController iconController = TextEditingController();
-  final TextEditingController userName = TextEditingController();
+  final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   bool isFormSubmitted = false;
   var db = FirebaseFirestore.instance;
+  bool isLoading = false;
 
   IconLabel? selectedIcon;
 
-  //check user already Register
-  Future<bool> getUserByEmail(String email) async {
+  //check email & Password & Role
+  Future<bool> checkCredential(
+      String email, String password, String role) async {
     try {
       var querySnapshot =
       await db.collection("clients").where("email", isEqualTo: email).get();
 
       if (querySnapshot.docs.isNotEmpty) {
-        return true;
+        for (var doc in querySnapshot.docs) {
+          Map<String, dynamic> data = doc.data();
+          // print("Document ID: ${doc.id}");
+          print("Document Data: ${data['password']} $password $role");
+          print("Document Data: $data");
+          print(
+              "Document Data: ${data['password'] == password && data['Role'] == role}");
+          if (data['password'] == password && data['Role'] == role) {
+            try {
+              print("object is not  waiting");
+              // var prefs = await SharedPreferences.getInstance();
+              // print("object is waiting");
+              // prefs.setString("Name", data['userName'].toString());
+              // prefs.setString("Role", role.toString());
+              print("Object Yes ");
+              return true;
+            } catch (err) {
+              print("Error From Shared Predd $err");
+            }
+          } else {
+            return false;
+          }
+
+          // Access the document data as a map
+        }
+        return false;
       } else {
         print("No user found with email: $email");
         return false;
@@ -42,22 +69,34 @@ class _LoginState extends State<LoginScreen> {
   }
   //handler login
   handlerLogin() async {
-    print('selected Icon ${iconController.text} $isFormSubmitted');
     setState(() {
       isFormSubmitted = true;
     });
+    if (iconController.text == "") {
+      return;
+    }
+    setState(() {
+      isFormSubmitted = true;
+      isLoading = true;
+    });
     if (loginFormKey.currentState!.validate()) {
-      // var userExits = await getUserByEmail(email)
-      loginFormKey.currentState?.reset();
-      userName.clear();
-      password.clear();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Login....'),
-        ),
-      );
+      var userExits =
+          await checkCredential(email.text, password.text, iconController.text);
+      print(userExits);
+      if (userExits) {
+        CustomSnackBar.show(context, 'Login Successfully');
+        loginFormKey.currentState?.reset();
+        email.clear();
+        password.clear();
+        // Navigator.pushNamed(context, 'login');
+      } else {
+        CustomSnackBar.show(context, 'Invalid Credential', bg: 'red');
+      }
     }
     ;
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -73,6 +112,8 @@ class _LoginState extends State<LoginScreen> {
               children: [
                 AuthHeader("Log In"),
                 Container(
+                    height: MediaQuery.of(context).size.height,
+                    color: Colors.black.withAlpha(128),
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).size.height * 0.4,
                         left: 20,
@@ -88,7 +129,7 @@ class _LoginState extends State<LoginScreen> {
                               });
                             },isFormSubmitted),
                             SizeBox(15),
-                            InputFormField(userName, "userName"),
+                            InputFormField(email, "email"),
                             SizeBox(15),
                             Password(password, "password"),
                             Row(
@@ -99,7 +140,11 @@ class _LoginState extends State<LoginScreen> {
                                   CustomTextButton("Forgot Password", "email"),
                                 ]),
                             SizeBox(10),
-                            NextWithIcon(() => handlerLogin()),
+                            isLoading
+                                ? CircularProgressIndicator(
+                                    valueColor:
+                                        AlwaysStoppedAnimation(Colors.white))
+                                : NextWithIcon(() => handlerLogin()),
                           ],
                         ))),
               ],
