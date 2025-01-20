@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "908898805815",
+    "project_id": "siteassesstment",
+    "storage_bucket": "siteassesstment.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908898805815:android:dee2ada18562a3d61477b2",
+        "android_client_info": {
+          "package_name": "com.example.site_assessment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB25zu09TxCelaUQqwjdLo00ex_ahENywU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
