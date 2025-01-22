@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:site_assessment/src/constants/constants.dart';
 
 //iconLabel
 enum IconLabel {
@@ -26,7 +27,7 @@ class AuthHeader extends StatelessWidget {
       child: Text(
         "$title ! \nAssessment App ",
         style: TextStyle(
-            fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+            fontSize: 25, fontWeight: FontWeight.bold, color:AppColors.mainColor),
       ),
     );
   }
@@ -59,13 +60,13 @@ class NextWithIcon extends StatelessWidget {
       Text(
         "Next",
         style: TextStyle(
-            fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+            fontSize: 25, fontWeight: FontWeight.bold, color:AppColors.mainColor),
       ),
       CircleAvatar(
           radius: 30,
-          backgroundColor: Colors.white,
+          backgroundColor:AppColors.mainColor,
           child: IconButton(
-              color: Colors.black,
+              color: Colors.white,
               onPressed: () => onPress(),
               icon: Icon(Icons.arrow_forward))),
     ]);
@@ -92,11 +93,11 @@ class InputFormField extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: BorderSide(color: AppColors.mainColor),
             borderRadius: BorderRadius.circular(12),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: BorderSide(color: AppColors.mainColor),
             borderRadius: BorderRadius.circular(12),
           )),
       validator: (value) {
@@ -138,9 +139,9 @@ class CustomTextButton extends StatelessWidget {
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppColors.mainColor,
             decoration: TextDecoration.underline,
-            decorationColor: Colors.white,
+            decorationColor: AppColors.mainColor,
           ),
         ));
   }
@@ -174,18 +175,18 @@ class DynamicMenuState extends State<DynamicMenu> {
         //   Icons.search,
         //   color: Colors.white,
         // ),
-        trailingIcon: const Icon(Icons.arrow_drop_down, color: Colors.white),
+        trailingIcon: const Icon(Icons.arrow_drop_down, color: AppColors.mainColor),
         label: Text(
           'Select Role',
-          style: TextStyle(fontSize: 14, color: Colors.white),
+          style: TextStyle(fontSize: 14, color: AppColors.mainColor),
         ),
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: OutlineInputBorder(
-            borderSide:  BorderSide(color: widget.isFormSubmitted && selectedIcon == null ? Colors.red : Colors.white)
+            borderSide:  BorderSide(color: widget.isFormSubmitted && selectedIcon == null ? Colors.red : AppColors.mainColor)
           ),
           focusedBorder: OutlineInputBorder(
             borderSide:
-                BorderSide(color: widget.isFormSubmitted && selectedIcon == null ? Colors.red : Colors.white),
+                BorderSide(color: widget.isFormSubmitted && selectedIcon == null ? Colors.red : AppColors.mainColor),
           ),
         ),
         onSelected: (icon){
@@ -199,9 +200,9 @@ class DynamicMenuState extends State<DynamicMenu> {
             return DropdownMenuEntry<IconLabel>(
               value: icon,
               label: icon.label,
-              leadingIcon: Icon(icon.icon),
+              leadingIcon: Icon(icon.icon,color: AppColors.mainColor,),
               style: MenuItemButton.styleFrom(
-                  // foregroundColor: Colors.white,
+                  foregroundColor: AppColors.mainColor,
 
                   ),
             );

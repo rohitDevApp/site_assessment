@@ -1,122 +1,134 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:site_assessment/src/constants/image_string.dart';
-import 'package:site_assessment/src/features/authentication/controllers/splash_screen_controller.dart';
+import 'package:site_assessment/src/constants/constants.dart';
 
-
-class SplashScreen extends StatefulWidget{
+class SplashScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState()=>SplashScreenState();
+  State<StatefulWidget> createState() => SplashScreenState();
 }
+
 class SplashScreenState extends State<SplashScreen> {
-  bool animate =false;
+  bool animate = false;
 
   @override
   void initState() {
-  startAnimation();
+    startAnimation();
   }
+
   @override
   Widget build(BuildContext context) {
     // splashController.startAnimation();
     return Scaffold(
         body: SafeArea(
-            child: Stack(
-      children: [
-        AnimatedPositioned(
-            duration: const Duration(milliseconds: 1000),
-            top: !animate
-                ? 0
-                : MediaQuery.of(context).size.height * 0.1,
-            left: 20,
-            child: SizedBox(
-              width: 150,
-              height: 150,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image(
-                  image: AssetImage(splashScreen),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            )),
-       AnimatedPositioned(
-              duration: const Duration(milliseconds: 2000),
-              top: MediaQuery.of(context).size.height * 0.12,
-              right: animate ? 20 : 60,
-              child: SizedBox(
-                  height: 100,
-                  width: 100,
-                  child: ClipOval(
-                    child: Image(
-                      image: AssetImage(splashScreen4),
-                      fit: BoxFit.cover,
-                    ),
-                  )),
-        ),
-     AnimatedPositioned(
-            duration: const Duration(milliseconds: 2000),
-            top: MediaQuery.of(context).size.height * 0.3,
-            left: animate ? 20 : 80,
-            child: Column(
-              children: [
-                Text(
-                  "Welcome To ! \nSite Assessment App",
-                  style: TextStyle(fontSize: 22),
-                ),
-              ],
-            )), AnimatedPositioned(
-            duration: const Duration(milliseconds: 2000),
-            top: MediaQuery.of(context).size.height * 0.4,
-            right: animate ? 20 : 80,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: SizedBox(
-                width: 300,
-                height: 300,
-                child: Image(
-                  image: AssetImage(splashScreen2),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            )),
-       AnimatedPositioned(
-            duration: const Duration(milliseconds: 2000),
-            top: MediaQuery.of(context).size.height * 0.8,
-            left: animate ? 20 : 80,
-            child: SizedBox(
-                height: 100,
-                width: 100,
-                child: ClipOval(
-                  child: Image(
-                    image: AssetImage(splashScreen3),
-                    fit: BoxFit.cover,
+
+            child: Container(
+              color: Colors.purple.shade300,
+              child: Stack(
+                children: [
+                  AnimatedPositioned(
+                      duration: const Duration(milliseconds: 1000),
+                      top: !animate ? 0 : MediaQuery.of(context).size.height * 0.1,
+                      left: 20,
+                      child: SizedBox(
+                        width: 150,
+                        height: 150,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image(
+                            image: AssetImage(splashScreen),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      )),
+                  AnimatedPositioned(
+                    duration: const Duration(milliseconds: 2000),
+                    top: MediaQuery.of(context).size.height * 0.12,
+                    right: animate ? 20 : 60,
+                    child: SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: ClipOval(
+                          child: Image(
+                            image: AssetImage(splashScreen4),
+                            fit: BoxFit.cover,
+                          ),
+                        )),
                   ),
-                ))),
-        AnimatedPositioned(
-              duration: const Duration(milliseconds: 2000),
-              top: MediaQuery.of(context).size.height * 0.8,
-              right: animate ? 20 : 80,
-              child: SizedBox(
-                  height: 100,
-                  width: 100,
-                  child: ClipOval(
-                    child: Image(
-                      image: AssetImage(splashScreen4),
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+                  AnimatedPositioned(
+                      duration: const Duration(milliseconds: 2000),
+                      top: MediaQuery.of(context).size.height * 0.3,
+                      left: animate ? 20 : 80,
+                      child: Column(
+                        children: [
+                          Text(
+                            "Welcome To ! \nSite Assessment App",
+                            style: TextStyle(fontSize: 22,color: Colors.white),
+                          ),
+                        ],
+                      )),
+                  AnimatedPositioned(
+                      duration: const Duration(milliseconds: 2000),
+                      top: MediaQuery.of(context).size.height * 0.4,
+                      right: animate ? 20 : 80,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: SizedBox(
+                          width: 300,
+                          height: 300,
+                          child: Image(
+                            image: AssetImage(splashScreen2),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      )),
+                  AnimatedPositioned(
+                      duration: const Duration(milliseconds: 2000),
+                      top: MediaQuery.of(context).size.height * 0.8,
+                      left: animate ? 20 : 80,
+                      child: SizedBox(
+                          height: 100,
+                          width: 100,
+                          child: ClipOval(
+                            child: Image(
+                              image: AssetImage(splashScreen3),
+                              fit: BoxFit.cover,
+                            ),
+                          ))),
+                  AnimatedPositioned(
+                    duration: const Duration(milliseconds: 2000),
+                    top: MediaQuery.of(context).size.height * 0.8,
+                    right: animate ? 20 : 80,
+                    child: SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: ClipOval(
+                          child: Image(
+                            image: AssetImage(splashScreen4),
+                            fit: BoxFit.cover,
+                          ),
+                        )),
+                  )
+                ],
+              ),
+            )
         )
-      ],
-    )));
+    );
   }
 
   //Start Animation
   Future startAnimation() async {
-      await Future.delayed(Duration(milliseconds: 500));
-      setState(() {
-        animate=true;
-      });
-      await Future.delayed(Duration(milliseconds: 2000));
-      Navigator.pushNamed(context, 'login');
+    await Future.delayed(Duration(milliseconds: 500));
+    setState(() {
+      animate = true;
+    });
+    await Future.delayed(Duration(milliseconds: 2000));
+    var prefs = await SharedPreferences.getInstance();
+    var isLogin = prefs.getBool(KEYS.isLogin) ?? false;
+    if (isLogin) {
+      Navigator.pushNamed(context, ROUTES.dashboard);
+    } else {
+      Navigator.pushNamed(context, ROUTES.login);
+    }
   }
 }

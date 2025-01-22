@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constants/constants.dart';
+
 class Password extends StatefulWidget {
   final TextEditingController _controller;
   final TextEditingController? confirmController;
@@ -34,16 +36,17 @@ class PasswordState extends State<Password> {
           borderRadius: BorderRadius.circular(12),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: AppColors.mainColor),
           borderRadius: BorderRadius.circular(12),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: AppColors.mainColor),
           borderRadius: BorderRadius.circular(12),
         ),
         suffixIcon: IconButton(
           icon: Icon(
             obscureText ? Icons.visibility_off : Icons.visibility,
+            color: AppColors.mainColor,
           ),
           onPressed: () {
             setState(() {

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:site_assessment/src/common_widgets/common.dart';
+import 'package:site_assessment/src/constants/constants.dart';
+import 'package:site_assessment/src/utils/SharedPreferencesHelper.dart';
 
 import '../../../../common_widgets/password.dart';
 
@@ -36,17 +38,15 @@ class _LoginState extends State<LoginScreen> {
           Map<String, dynamic> data = doc.data();
           // print("Document ID: ${doc.id}");
           print("Document Data: ${data['password']} $password $role");
-          print("Document Data: $data");
+          print("Document Data: ${doc.id}");
           print(
               "Document Data: ${data['password'] == password && data['Role'] == role}");
           if (data['password'] == password && data['Role'] == role) {
             try {
-              print("object is not  waiting");
-              // var prefs = await SharedPreferences.getInstance();
-              // print("object is waiting");
-              // prefs.setString("Name", data['userName'].toString());
-              // prefs.setString("Role", role.toString());
-              print("Object Yes ");
+              await SharedPreferencesHelper.setPrefValue(KEYS.Name,data['userName'].toString());
+              await SharedPreferencesHelper.setPrefValue(KEYS.Role,role.toString());
+              await SharedPreferencesHelper.setPrefValue(KEYS.isLogin,true);
+              await SharedPreferencesHelper.setPrefValue(KEYS.userId,doc.id);
               return true;
             } catch (err) {
               print("Error From Shared Predd $err");
@@ -81,14 +81,13 @@ class _LoginState extends State<LoginScreen> {
     });
     if (loginFormKey.currentState!.validate()) {
       var userExits =
-          await checkCredential(email.text, password.text, iconController.text);
-      print(userExits);
+      await checkCredential(email.text, password.text, iconController.text);
       if (userExits) {
         CustomSnackBar.show(context, 'Login Successfully');
         loginFormKey.currentState?.reset();
         email.clear();
         password.clear();
-        // Navigator.pushNamed(context, 'login');
+        Navigator.pushNamed(context, ROUTES.dashboard);
       } else {
         CustomSnackBar.show(context, 'Invalid Credential', bg: 'red');
       }
@@ -101,55 +100,48 @@ class _LoginState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/bg.jpg'), fit: BoxFit.cover)),
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-            child: Stack(
-              children: [
-                AuthHeader("Log In"),
-                Container(
-                    height: MediaQuery.of(context).size.height,
-                    color: Colors.black.withAlpha(128),
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.4,
-                        left: 20,
-                        right: 20),
-                    child: Form(
-                        key: loginFormKey,
-                        child: Column(
-                          children: [
-                            SizeBox(15),
-                            DynamicMenu(iconController, (IconLabel? icon) {
-                              setState(() {
-                                selectedIcon = icon;
-                              });
-                            },isFormSubmitted),
-                            SizeBox(15),
-                            InputFormField(email, "email"),
-                            SizeBox(15),
-                            Password(password, "password"),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  CustomTextButton("SignUp", "signUp"),
-                                  CustomTextButton("Forgot Password", "email"),
-                                ]),
-                            SizeBox(10),
-                            isLoading
-                                ? CircularProgressIndicator(
-                                    valueColor:
-                                        AlwaysStoppedAnimation(Colors.white))
-                                : NextWithIcon(() => handlerLogin()),
-                          ],
-                        ))),
-              ],
-            ),
-          )),
-    );
+    return Scaffold(
+        // backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Stack(
+            children: [
+              AuthHeader("Log In"),
+              Container(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.4,
+                      left: 20,
+                      right: 20),
+                  child: Form(
+                      key: loginFormKey,
+                      child: Column(
+                        children: [
+                          SizeBox(15),
+                          DynamicMenu(iconController, (IconLabel? icon) {
+                            setState(() {
+                              selectedIcon = icon;
+                            });
+                          },isFormSubmitted),
+                          SizeBox(15),
+                          InputFormField(email, "email"),
+                          SizeBox(15),
+                          Password(password, "password"),
+                          Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomTextButton("SignUp", "signUp"),
+                                CustomTextButton("Forgot Password", "email"),
+                              ]),
+                          SizeBox(10),
+                          isLoading
+                              ? CircularProgressIndicator(
+                                  valueColor:
+                                      AlwaysStoppedAnimation(AppColors.mainColor))
+                              : NextWithIcon(() => handlerLogin()),
+                        ],
+                      ))),
+            ],
+          ),
+        ));
   }
 }

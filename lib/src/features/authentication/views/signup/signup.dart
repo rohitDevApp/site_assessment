@@ -1,8 +1,8 @@
 import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:site_assessment/src/common_widgets/common.dart';
+import 'package:site_assessment/src/constants/constants.dart';
 import '../../../../common_widgets/password.dart';
 
 class SignUp extends StatefulWidget {
@@ -23,6 +23,8 @@ class SignUpState extends State<SignUp> {
   bool isFormSubmitted = false;
   bool isLoading = false;
   var db = FirebaseFirestore.instance;
+  List<String> attachments = [];
+  bool isHTML = false;
 
   //check user already Register
   Future<bool> getUserByEmail(String email) async {
@@ -62,6 +64,11 @@ class SignUpState extends State<SignUp> {
         "password": password.text,
         "Role": iconController.text
       };
+      setState(() {
+            isLoading = false;
+          });
+
+
       try {
         print("$user users");
         var userExits = await getUserByEmail(email.text);
@@ -93,49 +100,43 @@ class SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/bg.jpg'), fit: BoxFit.cover)),
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-            child: Stack(
-              children: [
-                AuthHeader("Sign Up"),
-                Container(
-                  margin: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.4,
-                      left: 20,
-                      right: 20),
-                  child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          DynamicMenu(iconController, (IconLabel? icon) {
-                            setState(() {
-                              selectedIcon = icon;
-                            });
-                          }, isFormSubmitted),
-                          SizeBox(15),
-                          InputFormField(userName, "UserName"),
-                          SizeBox(15),
-                          InputFormField(email, "Email"),
-                          SizeBox(15),
-                          Password(password, "Password"),
-                          SizeBox(20),
-                          isLoading
-                              ? CircularProgressIndicator(
-                                  valueColor:
-                                      AlwaysStoppedAnimation(Colors.white),
-                                )
-                              : NextWithIcon(() => signUpHandler()),
-                        ],
-                      )),
-                )
-              ],
-            ),
-          )),
-    );
+    return Scaffold(
+        body: SingleChildScrollView(
+          child: Stack(
+            children: [
+              AuthHeader("Sign Up"),
+              Container(
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.4,
+                    left: 20,
+                    right: 20),
+                child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        DynamicMenu(iconController, (IconLabel? icon) {
+                          setState(() {
+                            selectedIcon = icon;
+                          });
+                        }, isFormSubmitted),
+                        SizeBox(15),
+                        InputFormField(userName, "UserName"),
+                        SizeBox(15),
+                        InputFormField(email, "Email"),
+                        SizeBox(15),
+                        Password(password, "Password"),
+                        SizeBox(20),
+                        isLoading
+                            ? CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation(AppColors.mainColor),
+                              )
+                            : NextWithIcon(() => signUpHandler()),
+                      ],
+                    )),
+              )
+            ],
+          ),
+        ));
   }
 }

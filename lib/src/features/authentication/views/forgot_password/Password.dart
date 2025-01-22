@@ -29,40 +29,31 @@ class ForgotPasswordState extends State<ForgotPassword> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/bg.jpg'),
-              fit: BoxFit.cover)),
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-            child:Stack(
-              children: [
-                AuthHeader("Forgot Password"),
-                Container(
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.3,
-                        left: 20,
-                        right: 20),
-                    child: Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          SizeBox(15),
-                          Password(newPass, 'New Password'),
-                          SizeBox(15),
-                          Password(confirmPass, 'Confirm Password' , confirmController:newPass),
-                          SizeBox(30),
-                          NextWithIcon(passwordHandler)
-                        ],
-                      ),
-                    ))
-              ],
-            )),
-          )
-
-    );
+    return Scaffold(
+        body: SingleChildScrollView(
+          child:Stack(
+            children: [
+              AuthHeader("Forgot Password"),
+              Container(
+                  margin: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.4,
+                      left: 20,
+                      right: 20),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        SizeBox(15),
+                        Password(newPass, 'New Password'),
+                        SizeBox(15),
+                        Password(confirmPass, 'Confirm Password' , confirmController:newPass),
+                        SizeBox(30),
+                        NextWithIcon(passwordHandler)
+                      ],
+                    ),
+                  ))
+            ],
+          )),
+        );
   }
 }
