@@ -36,17 +36,17 @@ class PasswordState extends State<Password> {
           borderRadius: BorderRadius.circular(12),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.mainColor),
+          borderSide: BorderSide(color: Colors.black54),
           borderRadius: BorderRadius.circular(12),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.mainColor),
+          borderSide: BorderSide(color: Colors.black54),
           borderRadius: BorderRadius.circular(12),
         ),
         suffixIcon: IconButton(
           icon: Icon(
             obscureText ? Icons.visibility_off : Icons.visibility,
-            color: AppColors.mainColor,
+            color: Colors.black54,
           ),
           onPressed: () {
             setState(() {

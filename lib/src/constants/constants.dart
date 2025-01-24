@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 
 class KEYS {
-  static String get Name => 'Name';
+  static String get fullName => 'fullName';
   static String get Role => 'Role';
   static String get isLogin => 'isLogin';
   static String get userId => 'userId';
@@ -35,7 +35,7 @@ class DashRoutes{
 
 //Colors
 class AppColors{
-  static const Color mainColor = Colors.purple;
+  static const Color mainColor = Color(0xFF0077B5);
   static const Color errorColor = Colors.red;
 }
 

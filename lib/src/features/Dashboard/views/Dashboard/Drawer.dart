@@ -81,12 +81,12 @@ class CustomDrawer extends StatelessWidget {
                   children: [
                     Icon(
                       option.icon,
-                      color: Colors.purple,
+                      color: Colors.black,
                     ),
                     TextButton(
                       onPressed: () => handleOptionPress(index),
-                      child: CustomText("  ${option.label}", 16,
-                          FontWeight.bold, AppColors.mainColor),
+                      child: CustomText(option.label, 16,
+                          FontWeight.normal, Colors.black),
                     )
                   ],
                 ),

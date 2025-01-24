@@ -1,11 +1,15 @@
-import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:site_assessment/src/api/firebaseApi.dart';
 import 'package:site_assessment/src/common_widgets/common.dart';
 import 'package:site_assessment/src/constants/constants.dart';
+import 'package:site_assessment/src/constants/firebase.dart';
+import '../../../../common_widgets/SnackBar.dart';
 import '../../../../common_widgets/password.dart';
 
 class SignUp extends StatefulWidget {
+  const SignUp({super.key});
+
   @override
   State<StatefulWidget> createState() => SignUpState();
 }
@@ -14,9 +18,10 @@ class SignUp extends StatefulWidget {
 class SignUpState extends State<SignUp> {
   final TextEditingController colorController = TextEditingController();
   final TextEditingController iconController = TextEditingController();
-  final TextEditingController userName = TextEditingController();
-  final TextEditingController email = TextEditingController();
-  final TextEditingController password = TextEditingController();
+  final TextEditingController userNameController = TextEditingController();
+  final TextEditingController aboutController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   IconLabel? selectedIcon;
   String roleValue = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -30,7 +35,7 @@ class SignUpState extends State<SignUp> {
   Future<bool> getUserByEmail(String email) async {
     try {
       var querySnapshot =
-          await db.collection("clients").where("email", isEqualTo: email).get();
+          await db.collection(FireBaseConstant.usersCollection).where("email", isEqualTo: email).get();
 
       if (querySnapshot.docs.isNotEmpty) {
         return true;
@@ -59,10 +64,11 @@ class SignUpState extends State<SignUp> {
 
     if (_formKey.currentState!.validate()) {
       final user = <String, dynamic>{
-        "userName": userName.text,
-        "email": email.text,
-        "password": password.text,
-        "Role": iconController.text
+        "fullName": userNameController.text,
+        "email": emailController.text,
+        "password": passwordController.text,
+        "Role": iconController.text,
+        "about": aboutController.text,
       };
       setState(() {
             isLoading = false;
@@ -70,8 +76,7 @@ class SignUpState extends State<SignUp> {
 
 
       try {
-        print("$user users");
-        var userExits = await getUserByEmail(email.text);
+        var userExits = await getUserByEmail(emailController.text);
         if (userExits) {
           CustomSnackBar.show(context, 'User Already Exits', bg: 'red');
           setState(() {
@@ -79,11 +84,12 @@ class SignUpState extends State<SignUp> {
           });
           return;
         } else {
-          var res = await db.collection("clients").add(user);
+          // var res = await db.collection("clients").add(user);
+         var res = await FireBaseApi.insert(FireBaseConstant.usersCollection, user);
           print("$res response");
-          userName.clear();
-          email.clear();
-          password.clear();
+          userNameController.clear();
+          emailController.clear();
+          passwordController.clear();
           CustomSnackBar.show(context, 'Registered Successfully');
           Navigator.pushNamed(context, 'login');
         }
@@ -107,7 +113,7 @@ class SignUpState extends State<SignUp> {
               AuthHeader("Sign Up"),
               Container(
                 margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.4,
+                    top: MediaQuery.of(context).size.height * 0.33,
                     left: 20,
                     right: 20),
                 child: Form(
@@ -120,11 +126,13 @@ class SignUpState extends State<SignUp> {
                           });
                         }, isFormSubmitted),
                         SizeBox(15),
-                        InputFormField(userName, "UserName"),
+                        InputFormField(userNameController, "Full Name"),
                         SizeBox(15),
-                        InputFormField(email, "Email"),
+                        InputFormField(emailController, "Email"),
                         SizeBox(15),
-                        Password(password, "Password"),
+                        Password(passwordController, "Password"),
+                        SizeBox(15),
+                        InputFormField(aboutController, "About"),
                         SizeBox(20),
                         isLoading
                             ? CircularProgressIndicator(

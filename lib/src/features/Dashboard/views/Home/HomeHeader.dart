@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class HomeHeader extends StatelessWidget {
   final String role;
-  const HomeHeader(this.role, {super.key});
+  final String fullName;
+
+  const HomeHeader(this.role,this.fullName, {super.key});
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -12,7 +14,7 @@ class HomeHeader extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(25),
             child: Text(
-              "Welcome Good Morning ! \nRonit $role ",
+              "Welcome Good Morning ! \n$fullName $role ",
               style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,

@@ -16,15 +16,20 @@ class Overview extends StatelessWidget {
             children: [
               Container(
                 margin: EdgeInsets.only(right: 12, left: 12, top: 12),
-                child: CustomText(
-                    "Overview", 25, FontWeight.bold, AppColors.mainColor),
+                child: Row(
+                  children: [
+                    Icon(Icons.add_chart_outlined ,color: Colors.green,),
+                    CustomText(
+                        " Overview", 19, FontWeight.bold, Colors.green)
+                  ],
+                ),
               ),
             ],
           ),
           SizeBox(10),
-          RowWithBox("Teams", 13, "", 10),
+          RowWithBox("Teams", 13, "Reports", 10),
           SizeBox(25),
-          RowWithBox("Officers", 13, "Reports", 0),
+          RowWithBox("Officers", 13, "", 0),
         ],
       ),
     );

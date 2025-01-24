@@ -1,6 +1,8 @@
 //CommentBox
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:site_assessment/src/common_widgets/CustomText.dart';
+import 'package:site_assessment/src/constants/constants.dart';
 class CommentBox extends StatefulWidget {
   const CommentBox({super.key});
 
@@ -32,13 +34,9 @@ class CommentBoxState extends State<CommentBox> {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: Text(
-        " Comments ",
-        style: TextStyle(color: Colors.white),
-      ),
+      title: CustomText("Comments", 16, FontWeight.normal, Colors.black),
       trailing: Icon(
         Icons.arrow_drop_down,
-        color: Colors.white,
       ),
       children: <Widget>[
         Divider(height: 1, color: Colors.grey),
@@ -57,22 +55,32 @@ class CommentBoxState extends State<CommentBox> {
                   child: Row(
                     children: [
                       Expanded(
-                          child: TextField(
-                            controller: commentController,
-                        decoration: InputDecoration(
-                            hintText: 'Write a comment...',
-                            border: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 16)),
-                      )),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border:Border.all(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(16)
+                            ),
+                            child: TextField(
+                              controller: commentController,
+                              decoration: InputDecoration(
+                                  hintText: 'Write a comment...',
+                                  border: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 16)),
+                            ),
+                          )),
                       SizedBox(width: 10),
                       ElevatedButton(
                         onPressed: addComments,
                         child: Icon(
                           Icons.send,
-                          color: Colors.purple,
+                          color: AppColors.mainColor,
                         ),
                       ),
                     ],
@@ -106,7 +114,7 @@ class CommentField extends StatelessWidget {
           ),
           margin: EdgeInsets.symmetric(vertical: 3,horizontal: 0),
           padding: EdgeInsets.symmetric(vertical: 4 ,horizontal: 8),
-          child:Text(value, style: TextStyle(color: Colors.purple)),
+          child:CustomText(value, 14, FontWeight.normal, Colors.black),
         )
       ],
     );

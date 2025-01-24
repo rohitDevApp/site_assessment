@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:site_assessment/src/common_widgets/CustomText.dart';
+import 'package:site_assessment/src/constants/constants.dart';
 import 'package:site_assessment/src/features/Dashboard/views/Reports/ReportDto.dart';
 
 import 'CommentBox.dart';
@@ -19,7 +21,7 @@ class SingleReportState extends State<SingleReport> {
         padding: EdgeInsets.all(1),
         child: Card(
             elevation: 4,
-            color: Colors.purple,
+            color: AppColors.mainColor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: Theme(
@@ -39,32 +41,36 @@ class SingleReportState extends State<SingleReport> {
                 ),
                 children: <Widget>[
                   Divider(height: 3, color: Colors.white),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        ReportField(
-                            "Customer Name : ${widget.report.customerName}"),
-                        ReportField("Site Name : ${widget.report.siteName}"),
-                        ReportField("Location : ${widget.report.location}"),
-                        ReportField(
-                            "Date of Visit: ${widget.report.dateOfVisit}"),
-                        ReportField(
-                            "Pump Capacity : ${widget.report.pumpCapacity} m³/h "),
-                        ReportField(
-                            "Pump Efficiency :${widget.report.pumpEfficiency} %"),
-                        ReportField(
-                            "Liquid Temperature :${widget.report.liquidTemperature} °C"),
-                        ReportField(
-                            "Electrical Power Consumption: ${widget.report.electricalPowerConsumption} Kw"),
-                        ReportField(
-                            "Installation Date : ${widget.report.installationDate}"),
-                        ReportField(
-                            "Last Service Date : ${widget.report.lastServiceDate}"),
-                        CommentBox(),
-                      ],
+                  Container(
+                    color: Colors.white,
+                    child:  Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        children: [
+                          ReportField(
+                              "Customer Name : ${widget.report.customerName}"),
+                          ReportField("Site Name : ${widget.report.siteName}"),
+                          ReportField("Location : ${widget.report.location}"),
+                          ReportField(
+                              "Date of Visit: ${widget.report.dateOfVisit}"),
+                          ReportField(
+                              "Pump Capacity : ${widget.report.pumpCapacity} m³/h "),
+                          ReportField(
+                              "Pump Efficiency :${widget.report.pumpEfficiency} %"),
+                          ReportField(
+                              "Liquid Temperature :${widget.report.liquidTemperature} °C"),
+                          ReportField(
+                              "Electrical Power Consumption: ${widget.report.electricalPowerConsumption} Kw"),
+                          ReportField(
+                              "Installation Date : ${widget.report.installationDate}"),
+                          ReportField(
+                              "Last Service Date : ${widget.report.lastServiceDate}"),
+                          CommentBox(),
+                        ],
+                      ),
                     ),
                   )
+
                 ],
                 onExpansionChanged: (bool expanded) {
                   setState(() => customIcon = expanded);
@@ -83,7 +89,7 @@ class ReportField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(value, style: TextStyle(color: Colors.white)),
+        CustomText(value, 16, FontWeight.normal, Colors.black)
       ],
     );
   }

@@ -1,8 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:site_assessment/src/common_widgets/common.dart';
 
+import '../../../../common_widgets/SnackBar.dart';
+
 class Email extends StatefulWidget {
+  const Email({super.key});
+
   @override
   State<StatefulWidget> createState() => EmailState();
 }
@@ -30,37 +33,31 @@ class EmailState extends State<Email> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        // padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
-
-        // decoration: BoxDecoration(
-        //     image: DecorationImage(
-        //         image: AssetImage('assets/images/bg.jpg'), fit: BoxFit.cover)),
-        child: Scaffold(
-          body: SingleChildScrollView(
-              child: Stack(
-            children: [
-              AuthHeader("Email"),
-              // SingleChildScrollView(
-              Container(
-                  margin: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.4,
-                      left: 20,
-                      right: 20),
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        SizeBox(15),
-                        InputFormField(email, 'Email'),
-                        SizeBox(15),
-                        NextWithIcon(passwordHandler)
-                      ],
-                    ),
-                  ))
-              // ),
-            ],
-          )),
-        ));
+    return Scaffold(
+      body: SingleChildScrollView(
+          child: Stack(
+        children: [
+          AuthHeader("Email"),
+          // SingleChildScrollView(
+          Container(
+              margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.4,
+                  left: 20,
+                  right: 20),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    SizeBox(15),
+                    InputFormField(email, 'Email'),
+                    SizeBox(15),
+                    NextWithIcon(passwordHandler)
+                  ],
+                ),
+              ))
+          // ),
+        ],
+      )),
+    );
   }
 }

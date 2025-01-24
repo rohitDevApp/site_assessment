@@ -10,7 +10,7 @@ class TabScreen extends StatelessWidget{
     return  NavigationDestination(
         icon: Icon(
           icon,
-          color: Colors.purple,
+          color: Colors.black,
           size: 28,
         ),
         label: label);

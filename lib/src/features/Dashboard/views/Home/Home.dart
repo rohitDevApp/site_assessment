@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:site_assessment/src/common_widgets/common.dart';
 import 'package:site_assessment/src/constants/constants.dart';
 import 'package:site_assessment/src/utils/user.dart';
 
@@ -16,13 +17,14 @@ class HomeScreen extends StatefulWidget {
 //HomeState
 class HomeState extends State<HomeScreen> {
   String role = "No Role";
+  String fullName = "NA";
 
   //getUserInfo
   void getUserInfo() async {
     var data = await CurrentUser.get();
-    print("${data['role']} Current User");
     setState(() {
       role = data['role'] ?? 'No Role';
+      fullName = data['fullName'] ?? 'NA';
     });
   }
 
@@ -41,7 +43,7 @@ class HomeState extends State<HomeScreen> {
         height: MediaQuery.of(context).size.height,
         child: Stack(
           children: [
-            HomeHeader(role),
+            HomeHeader(role, fullName),
             Positioned(
                 top: MediaQuery.of(context).size.height * 0.22,
                 bottom: 0,
@@ -62,7 +64,7 @@ class HomeState extends State<HomeScreen> {
                     ),
                     child: SingleChildScrollView(
                       child: Column(
-                        children: [Overview(), TasksReport()],
+                        children: [SizeBox(15), Overview(),SizeBox(15),  TasksReport()],
                       ),
                     ),
                   ),

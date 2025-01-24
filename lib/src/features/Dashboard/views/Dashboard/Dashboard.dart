@@ -51,15 +51,15 @@ class DashboardState extends State<Dashboard> {
         body: screens[index],
         bottomNavigationBar: NavigationBarTheme(
             data: NavigationBarThemeData(
-                indicatorColor: Colors.purple.shade200,
+                indicatorColor: Colors.blue.shade100,
                 labelTextStyle: WidgetStateProperty.all(TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.w500,
-                    color: Colors.purple))),
+                    color: Colors.black54))),
             child: NavigationBar(
                 height: 65,
                 selectedIndex: index,
-                backgroundColor: Colors.purple.shade100,
+                backgroundColor: Colors.white12,
                 onDestinationSelected: (index) {
                   if(index == 3){
                     _scaffoldKey.currentState?.openDrawer();

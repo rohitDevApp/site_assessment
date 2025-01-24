@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:site_assessment/src/common_widgets/CustomText.dart';
 import '../../../../common_widgets/common.dart';
-import '../../../../constants/constants.dart';
 import 'RowWithBox.dart';
 
 class TasksReport extends StatelessWidget {
@@ -16,8 +15,13 @@ class TasksReport extends StatelessWidget {
             children: [
               Container(
                 margin: EdgeInsets.only(right: 12, left: 12, top: 12),
-                child: CustomText(
-                    "Task Report", 25, FontWeight.bold, AppColors.mainColor),
+                child: Row(
+                  children: [
+                    Icon(Icons.task_alt ,color: Colors.red,),
+                    CustomText(
+                        " Task Report", 19, FontWeight.bold, Colors.red)
+                  ],
+                ),
               ),
             ],
           ),

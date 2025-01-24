@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:site_assessment/src/common_widgets/CustomText.dart';
 import 'package:site_assessment/src/constants/constants.dart';
 
 //iconLabel
@@ -11,24 +12,46 @@ enum IconLabel {
   final String label;
   final IconData icon;
 }
+// DropdownMenu(
+//   initialSelection: officerData.first,
+//     dropdownMenuEntries: officerData
+//         .map<DropdownMenuEntry<OfficerLabel>>(
+//             (OfficerLabel officer) {
+//   return DropdownMenuEntry<OfficerLabel>(
+//       value: officer, label: officer.name);
+// }).toList(),
+// onSelected: (OfficerLabel? officer){
+//       setState(() {
+//         selectedOfficer = officer;
+//       });
+// },),
+
+//OfficerLabel
+class OfficerLabel {
+  final String fullName;
+  final String officerId;
+  final String docId;
+  final String status;
+  final String email;
+    bool isSelected;
+   OfficerLabel(this.fullName, this.officerId ,this.status, this.email,this.docId, {this.isSelected = false});
+  @override
+  String toString() => fullName;
+}
 
 //Auth Header
 class AuthHeader extends StatelessWidget {
   final String title;
 
   //Constructor
-  AuthHeader(this.title);
+  const AuthHeader(this.title, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
           top: MediaQuery.of(context).size.height * 0.2, left: 20),
-      child: Text(
-        "$title ! \nAssessment App ",
-        style: TextStyle(
-            fontSize: 25, fontWeight: FontWeight.bold, color:AppColors.mainColor),
-      ),
+      child: CustomText("$title ! \nAssessment App ", 25, FontWeight.bold, AppColors.mainColor),
     );
   }
 }
@@ -37,7 +60,7 @@ class AuthHeader extends StatelessWidget {
 class SizeBox extends StatelessWidget {
   final double? height;
   //constructor
-  SizeBox(this.height);
+  const SizeBox(this.height, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +75,7 @@ class NextWithIcon extends StatelessWidget {
   final VoidCallback onPress;
 
   //constructor
-  NextWithIcon(this.onPress);
+  const NextWithIcon(this.onPress, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +102,7 @@ class InputFormField extends StatelessWidget {
   final String hintText;
 
   //Constructor
-  InputFormField(this._controller, this.hintText);
+  const InputFormField(this._controller, this.hintText, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -93,11 +116,11 @@ class InputFormField extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.mainColor),
+            borderSide: BorderSide(color: Colors.black54),
             borderRadius: BorderRadius.circular(12),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.mainColor),
+            borderSide: BorderSide(color: Colors.black54),
             borderRadius: BorderRadius.circular(12),
           )),
       validator: (value) {
@@ -128,7 +151,7 @@ class CustomTextButton extends StatelessWidget {
   final String text;
 
   //Constructor
-  CustomTextButton(this.text, this.routeName);
+  const CustomTextButton(this.text, this.routeName, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -139,9 +162,9 @@ class CustomTextButton extends StatelessWidget {
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.bold,
-            color: AppColors.mainColor,
+            color: Colors.black54,
             decoration: TextDecoration.underline,
-            decorationColor: AppColors.mainColor,
+            decorationColor: Colors.black54,
           ),
         ));
   }
@@ -175,18 +198,15 @@ class DynamicMenuState extends State<DynamicMenu> {
         //   Icons.search,
         //   color: Colors.white,
         // ),
-        trailingIcon: const Icon(Icons.arrow_drop_down, color: AppColors.mainColor),
-        label: Text(
-          'Select Role',
-          style: TextStyle(fontSize: 14, color: AppColors.mainColor),
-        ),
+        trailingIcon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
+        label: CustomText('Select Role', 14, FontWeight.normal, Colors.black54),
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: OutlineInputBorder(
-            borderSide:  BorderSide(color: widget.isFormSubmitted && selectedIcon == null ? Colors.red : AppColors.mainColor)
+            borderSide:  BorderSide(color: widget.isFormSubmitted && selectedIcon == null ? Colors.red : Colors.black54)
           ),
           focusedBorder: OutlineInputBorder(
             borderSide:
-                BorderSide(color: widget.isFormSubmitted && selectedIcon == null ? Colors.red : AppColors.mainColor),
+                BorderSide(color: widget.isFormSubmitted && selectedIcon == null ? Colors.red : Colors.black54),
           ),
         ),
         onSelected: (icon){
@@ -200,9 +220,9 @@ class DynamicMenuState extends State<DynamicMenu> {
             return DropdownMenuEntry<IconLabel>(
               value: icon,
               label: icon.label,
-              leadingIcon: Icon(icon.icon,color: AppColors.mainColor,),
+              leadingIcon: Icon(icon.icon,color: Colors.black54,),
               style: MenuItemButton.styleFrom(
-                  foregroundColor: AppColors.mainColor,
+                  foregroundColor: Colors.black54,
 
                   ),
             );
@@ -213,44 +233,3 @@ class DynamicMenuState extends State<DynamicMenu> {
   }
 }
 
-//Custom Snack bar
-class CustomSnackBar {
-  static void show(BuildContext context, String message, {String bg = "white"}) {
-    OverlayEntry overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: MediaQuery.of(context).padding.top + 40,
-        left: 20,
-        right: 20,
-        child: Material(
-          color: Colors.transparent,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: BoxDecoration(
-              color: bg == 'red' ? Colors.red : Colors.green,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 4,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Text(
-              message,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    // Insert the overlay entry
-    Overlay.of(context)!.insert(overlayEntry);
-
-    // Remove it after a delay
-    Future.delayed(Duration(seconds: 2), () {
-      overlayEntry.remove();
-    });
-  }
-}

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:site_assessment/src/common_widgets/common.dart';
 
+import '../../../../common_widgets/SnackBar.dart';
 import '../../../../common_widgets/password.dart';
 
 class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
+
   @override
   State<StatefulWidget> createState() => ForgotPasswordState();
 }

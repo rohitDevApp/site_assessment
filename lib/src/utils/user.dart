@@ -5,15 +5,15 @@ class CurrentUser {
   //Get user
   static dynamic get() async {
     var userId = await SharedPreferencesHelper.getPrefValue(KEYS.userId) ?? '';
-    var userName = await SharedPreferencesHelper.getPrefValue(KEYS.Name) ?? '';
+    var fullName = await SharedPreferencesHelper.getPrefValue(KEYS.fullName) ?? '';
     var role = await SharedPreferencesHelper.getPrefValue(KEYS.Role) ?? '';
-    return {'userId': userId, 'role': role, 'userName': userName};
+    return {'userId': userId, 'role': role, 'fullName': fullName};
   }
 
   //Remove User
   static  remove() async {
     await SharedPreferencesHelper.remove(KEYS.userId);
-    await SharedPreferencesHelper.remove(KEYS.Name);
+    await SharedPreferencesHelper.remove(KEYS.fullName);
     await SharedPreferencesHelper.remove(KEYS.Role);
     await SharedPreferencesHelper.setPrefValue(KEYS.isLogin, false);
   }
