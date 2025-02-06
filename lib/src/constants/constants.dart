@@ -8,6 +8,7 @@ class KEYS {
   static String get Role => 'Role';
   static String get isLogin => 'isLogin';
   static String get userId => 'userId';
+  static String get managerId => 'managerId';
 }
 
 //Routes
@@ -22,6 +23,7 @@ class ROUTES {
   static String get teams =>'Teams';
   static String get resetPassword =>'ResetPassword';
   static String get editProfile =>'EditProfile';
+  static String get viewReport =>'ViewReport';
 }
 
 class DashRoutes{
@@ -36,6 +38,7 @@ class DashRoutes{
 //Colors
 class AppColors{
   static const Color mainColor = Color(0xFF0077B5);
+  static const Color lightBlue = Color(0xFFE3F2FD);
   static const Color errorColor = Colors.red;
 }
 

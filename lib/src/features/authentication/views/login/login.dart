@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:site_assessment/src/api/firebaseApi.dart';
 import 'package:site_assessment/src/common_widgets/common.dart';
@@ -37,11 +36,6 @@ class _LoginState extends State<LoginScreen> {
       if (data.isNotEmpty) {
         for (var doc in data) {
           Map<String, dynamic> data = doc.data();
-          // print("Document ID: ${doc.id}");
-          print("Document Data: ${data['password']} $password $role");
-          print("Document Data: ${doc.id}");
-          print(
-              "Document Data: ${data['password'] == password && data['Role'] == role}");
           if (data['password'] == password && data['Role'] == role) {
             try {
               await SharedPreferencesHelper.setPrefValue(
@@ -52,13 +46,11 @@ class _LoginState extends State<LoginScreen> {
               await SharedPreferencesHelper.setPrefValue(KEYS.userId, doc.id);
               return true;
             } catch (err) {
-              print("Error From Shared Predd $err");
+              print("Error From Shared  $err");
             }
           } else {
             return false;
           }
-
-          // Access the document data as a map
         }
         return false;
       } else {
@@ -105,46 +97,46 @@ class _LoginState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-      child: Stack(
-        children: [
-          AuthHeader("Log In"),
-          Container(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.4,
-                  left: 20,
-                  right: 20),
-              child: Form(
-                  key: loginFormKey,
-                  child: Column(
-                    children: [
-                      SizeBox(15),
-                      DynamicMenu(iconController, (IconLabel? icon) {
-                        setState(() {
-                          selectedIcon = icon;
-                        });
-                      }, isFormSubmitted),
-                      SizeBox(15),
-                      InputFormField(email, "email"),
-                      SizeBox(15),
-                      Password(password, "password"),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomTextButton("SignUp", "signUp"),
-                            CustomTextButton("Forgot Password", "email"),
-                          ]),
-                      SizeBox(10),
-                      isLoading
-                          ? CircularProgressIndicator(
+      body: SafeArea(
+          child: Padding(padding: EdgeInsets.all(20),child: Stack(
+            children: [
+              Positioned(top: MediaQuery.of(context).size.height * 0.1,
+                  left: 0,
+                  right: 0,
+                  child: AuthHeader("Log In")),
+              Positioned(
+                  top: MediaQuery.of(context).size.height * 0.3,
+                  left: 0,
+                  right: 0,
+                  child: Form(
+                      key: loginFormKey,
+                      child: Column(
+                          spacing: 12,
+                        children: [
+                          DynamicMenu(iconController, (IconLabel? icon) {
+                            setState(() {
+                              selectedIcon = icon;
+                            });
+                          }, isFormSubmitted),
+                          InputFormField(email, "email"),
+                          Password(password, "password"),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomTextButton("SignUp", "signUp"),
+                                CustomTextButton("Forgot Password", "email"),
+                              ]),
+                          isLoading
+                              ? CircularProgressIndicator(
                               valueColor:
-                                  AlwaysStoppedAnimation(AppColors.mainColor))
-                          : NextWithIcon(() => handlerLogin()),
-                    ],
-                  ))),
-        ],
-      ),
-    ));
+                              AlwaysStoppedAnimation(AppColors.mainColor))
+                              : NextWithIcon(() => handlerLogin()),
+                        ],
+                      ))),
+            ],
+          ),)
+          ),
+    );
+
   }
 }

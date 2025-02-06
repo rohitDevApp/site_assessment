@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:site_assessment/src/common_widgets/common.dart';
-
+import 'package:site_assessment/src/common_widgets/layout/ScreenLayout.dart';
 import '../../../../common_widgets/SnackBar.dart';
+import '../../../../constants/constants.dart';
 
 class Email extends StatefulWidget {
   const Email({super.key});
@@ -13,51 +14,52 @@ class Email extends StatefulWidget {
 //State
 class EmailState extends State<Email> {
   bool isHTML = false;
+  bool isLoading = false;
   final TextEditingController email = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  final emailFormKey = GlobalKey<FormState>();
 
   //handler Forgot Password
   passwordHandler() {
-    if (formKey.currentState!.validate()) {
-      // sendOTP();
+    if (emailFormKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
       email.clear();
       CustomSnackBar.show(context, 'Sent OTP');
+      setState(() {
+        isLoading = false;
+      });
       Navigator.pushNamed(context, 'otp');
     }
   }
 
-
-
-  //Verified OTP
-  void verifyOTP() {}
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-          child: Stack(
-        children: [
-          AuthHeader("Email"),
-          // SingleChildScrollView(
-          Container(
-              margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.4,
-                  left: 20,
-                  right: 20),
-              child: Form(
-                key: formKey,
+    return ScreenLayout(
+      child: Stack(children: [
+        Positioned(
+            top: MediaQuery.of(context).size.height * 0.3,
+            left: 0,
+            right: 0,
+            child: AuthHeader("Email")),
+        Positioned(
+            top: MediaQuery.of(context).size.height * 0.4,
+            left: 0,
+            right: 0,
+            child: Form(
+                key: emailFormKey,
                 child: Column(
+                  spacing: 12,
                   children: [
-                    SizeBox(15),
                     InputFormField(email, 'Email'),
-                    SizeBox(15),
-                    NextWithIcon(passwordHandler)
+                    isLoading
+                        ? CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation(AppColors.mainColor))
+                        : NextWithIcon(passwordHandler),
                   ],
-                ),
-              ))
-          // ),
-        ],
-      )),
+                )))
+      ]),
     );
   }
 }

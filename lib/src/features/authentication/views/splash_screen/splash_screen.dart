@@ -4,6 +4,8 @@ import 'package:site_assessment/src/constants/image_string.dart';
 import 'package:site_assessment/src/constants/constants.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   State<StatefulWidget> createState() => SplashScreenState();
 }
@@ -13,6 +15,7 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    super.initState();
     startAnimation();
   }
 
@@ -23,7 +26,7 @@ class SplashScreenState extends State<SplashScreen> {
         body: SafeArea(
 
             child: Container(
-              color: Colors.purple.shade300,
+              color: AppColors.mainColor,
               child: Stack(
                 children: [
                   AnimatedPositioned(

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:site_assessment/src/common_widgets/CustomText.dart';
 import 'package:site_assessment/src/constants/constants.dart';
@@ -12,19 +11,6 @@ enum IconLabel {
   final String label;
   final IconData icon;
 }
-// DropdownMenu(
-//   initialSelection: officerData.first,
-//     dropdownMenuEntries: officerData
-//         .map<DropdownMenuEntry<OfficerLabel>>(
-//             (OfficerLabel officer) {
-//   return DropdownMenuEntry<OfficerLabel>(
-//       value: officer, label: officer.name);
-// }).toList(),
-// onSelected: (OfficerLabel? officer){
-//       setState(() {
-//         selectedOfficer = officer;
-//       });
-// },),
 
 //OfficerLabel
 class OfficerLabel {
@@ -33,8 +19,10 @@ class OfficerLabel {
   final String docId;
   final String status;
   final String email;
-    bool isSelected;
-   OfficerLabel(this.fullName, this.officerId ,this.status, this.email,this.docId, {this.isSelected = false});
+  bool isSelected;
+  OfficerLabel(
+      this.fullName, this.officerId, this.status, this.email, this.docId,
+      {this.isSelected = false});
   @override
   String toString() => fullName;
 }
@@ -48,11 +36,8 @@ class AuthHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * 0.2, left: 20),
-      child: CustomText("$title ! \nAssessment App ", 25, FontWeight.bold, AppColors.mainColor),
-    );
+    return CustomText(
+        "$title ! \nAssessment App ", 25, FontWeight.bold, AppColors.mainColor);
   }
 }
 
@@ -83,11 +68,13 @@ class NextWithIcon extends StatelessWidget {
       Text(
         "Next",
         style: TextStyle(
-            fontSize: 25, fontWeight: FontWeight.bold, color:AppColors.mainColor),
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: AppColors.mainColor),
       ),
       CircleAvatar(
           radius: 30,
-          backgroundColor:AppColors.mainColor,
+          backgroundColor: AppColors.mainColor,
           child: IconButton(
               color: Colors.white,
               onPressed: () => onPress(),
@@ -106,41 +93,50 @@ class InputFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: _controller,
-      decoration: InputDecoration(
-          hintText: hintText,
-          fillColor: Colors.white,
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black54),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black54),
-            borderRadius: BorderRadius.circular(12),
-          )),
-      validator: (value) {
-        String trimmedValue = value?.trim() ?? '';
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 6,
+      children: [
+        CustomText(hintText, 15, FontWeight.bold, Colors.black54),
+        TextFormField(
+          controller: _controller,
+          decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 12),
+              // hintText: hintText,
+              fillColor: Colors.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.grey),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.mainColor),
+                borderRadius: BorderRadius.circular(8),
+              )),
+          validator: (value) {
+            String trimmedValue = value?.trim() ?? '';
 
-        if (trimmedValue.isEmpty) {
-          return '$hintText Required ';
-        }
+            if (trimmedValue.isEmpty) {
+              return '$hintText Required ';
+            }
 
-        //Email
-        if (trimmedValue.isNotEmpty &&
-            hintText == "Email" &&
-            !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                .hasMatch(trimmedValue)) {
-          return 'Enter a valid email!';
-        }
+            //Email
+            if (trimmedValue.isNotEmpty &&
+                hintText == "Email" &&
+                !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                    .hasMatch(trimmedValue)) {
+              return 'Enter a valid email!';
+            }
 
-        return null;
-      },
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+            return null;
+          },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+        )
+      ],
     );
   }
 }
@@ -176,7 +172,7 @@ class DynamicMenu extends StatefulWidget {
   final Function(IconLabel?) onSelected;
   final bool isFormSubmitted;
 
-  DynamicMenu(this.iconController, this.onSelected,this.isFormSubmitted);
+  DynamicMenu(this.iconController, this.onSelected, this.isFormSubmitted);
 
   @override
   State<StatefulWidget> createState() => DynamicMenuState();
@@ -202,16 +198,20 @@ class DynamicMenuState extends State<DynamicMenu> {
         label: CustomText('Select Role', 14, FontWeight.normal, Colors.black54),
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: OutlineInputBorder(
-            borderSide:  BorderSide(color: widget.isFormSubmitted && selectedIcon == null ? Colors.red : Colors.black54)
-          ),
+              borderSide: BorderSide(
+                  color: widget.isFormSubmitted && selectedIcon == null
+                      ? Colors.red
+                      : Colors.black54)),
           focusedBorder: OutlineInputBorder(
-            borderSide:
-                BorderSide(color: widget.isFormSubmitted && selectedIcon == null ? Colors.red : Colors.black54),
+            borderSide: BorderSide(
+                color: widget.isFormSubmitted && selectedIcon == null
+                    ? Colors.red
+                    : Colors.black54),
           ),
         ),
-        onSelected: (icon){
+        onSelected: (icon) {
           setState(() {
-            selectedIcon=icon;
+            selectedIcon = icon;
           });
           widget.onSelected(icon);
         },
@@ -220,11 +220,13 @@ class DynamicMenuState extends State<DynamicMenu> {
             return DropdownMenuEntry<IconLabel>(
               value: icon,
               label: icon.label,
-              leadingIcon: Icon(icon.icon,color: Colors.black54,),
+              leadingIcon: Icon(
+                icon.icon,
+                color: Colors.black54,
+              ),
               style: MenuItemButton.styleFrom(
-                  foregroundColor: Colors.black54,
-
-                  ),
+                foregroundColor: Colors.black54,
+              ),
             );
           },
         ).toList(),
@@ -232,4 +234,3 @@ class DynamicMenuState extends State<DynamicMenu> {
     );
   }
 }
-

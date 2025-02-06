@@ -44,6 +44,8 @@ dependencies:
   firebase_auth: ^5.4.0
   flutter_email_sender: ^6.0.3
   intl: ^0.20.1
+  chips_choice: ^3.0.1
+  timeago: ^3.2.2
 
 dev_dependencies:
   flutter_test:
@@ -84,7 +86,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+    - family: AssetRegular
+      fonts:
+        - asset: assets/fonts/Asset-Regular.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

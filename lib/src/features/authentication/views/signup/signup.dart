@@ -34,8 +34,10 @@ class SignUpState extends State<SignUp> {
   //check user already Register
   Future<bool> getUserByEmail(String email) async {
     try {
-      var querySnapshot =
-          await db.collection(FireBaseConstant.usersCollection).where("email", isEqualTo: email).get();
+      var querySnapshot = await db
+          .collection(FireBaseConstant.usersCollection)
+          .where("email", isEqualTo: email)
+          .get();
 
       if (querySnapshot.docs.isNotEmpty) {
         return true;
@@ -71,9 +73,8 @@ class SignUpState extends State<SignUp> {
         "about": aboutController.text,
       };
       setState(() {
-            isLoading = false;
-          });
-
+        isLoading = false;
+      });
 
       try {
         var userExits = await getUserByEmail(emailController.text);
@@ -84,9 +85,8 @@ class SignUpState extends State<SignUp> {
           });
           return;
         } else {
-          // var res = await db.collection("clients").add(user);
-         var res = await FireBaseApi.insert(FireBaseConstant.usersCollection, user);
-          print("$res response");
+          var res =
+              await FireBaseApi.insert(FireBaseConstant.usersCollection, user);
           userNameController.clear();
           emailController.clear();
           passwordController.clear();
@@ -107,44 +107,43 @@ class SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-          child: Stack(
-            children: [
-              AuthHeader("Sign Up"),
-              Container(
-                margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.33,
-                    left: 20,
-                    right: 20),
-                child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        DynamicMenu(iconController, (IconLabel? icon) {
-                          setState(() {
-                            selectedIcon = icon;
-                          });
-                        }, isFormSubmitted),
-                        SizeBox(15),
-                        InputFormField(userNameController, "Full Name"),
-                        SizeBox(15),
-                        InputFormField(emailController, "Email"),
-                        SizeBox(15),
-                        Password(passwordController, "Password"),
-                        SizeBox(15),
-                        InputFormField(aboutController, "About"),
-                        SizeBox(20),
-                        isLoading
-                            ? CircularProgressIndicator(
-                                valueColor:
-                                    AlwaysStoppedAnimation(AppColors.mainColor),
-                              )
-                            : NextWithIcon(() => signUpHandler()),
-                      ],
-                    )),
-              )
-            ],
-          ),
-        ));
+        body: SafeArea(
+            child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Stack(
+                  children: [
+                    Positioned(top: MediaQuery.of(context).size.height * 0.1,
+                        left: 0,
+                        right: 0,
+                        child: AuthHeader("Sign Up")),
+                    Positioned(
+                        top: MediaQuery.of(context).size.height * 0.25,
+                        left: 0,
+                        right: 0,
+                        child: Form(
+                            key: _formKey,
+                            child: Column(
+                              spacing: 12,
+                              children: [
+                                DynamicMenu(iconController, (IconLabel? icon) {
+                                  setState(() {
+                                    selectedIcon = icon;
+                                  });
+                                }, isFormSubmitted),
+                                InputFormField(userNameController, "Full Name"),
+                                InputFormField(emailController, "Email"),
+                                Password(passwordController, "Password"),
+                                InputFormField(aboutController, "About"),
+                                isLoading
+                                    ? CircularProgressIndicator(
+                                        valueColor: AlwaysStoppedAnimation(
+                                            AppColors.mainColor),
+                                      )
+                                    : NextWithIcon(() => signUpHandler()),
+                              ],
+                            ))),
+                  ],
+                ))));
+
   }
 }

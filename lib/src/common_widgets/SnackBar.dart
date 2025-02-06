@@ -10,8 +10,8 @@ class CustomSnackBar {
     OverlayEntry overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
         top: MediaQuery.of(context).padding.top + 40,
-        left: 20,
-        right: 20,
+        left: 45,
+        right: 45,
         child: Material(
           color: Colors.transparent,
           child: Container(
@@ -27,17 +27,14 @@ class CustomSnackBar {
                 ),
               ],
             ),
-            child: Text(
-              message,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
+            child: Center(child: CustomText(message, 16, FontWeight.bold, Colors.white),)
           ),
         ),
       ),
     );
 
     // Insert the overlay entry
-    Overlay.of(context)!.insert(overlayEntry);
+    Overlay.of(context).insert(overlayEntry);
 
     // Remove it after a delay
     Future.delayed(Duration(seconds: 2), () {
@@ -54,7 +51,6 @@ class ActionSnackBar {
   ) {
     OverlayEntry overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        // top: MediaQuery.of(context).padding.top + 40,
         left: MediaQuery.of(context).size.width * 0.3,
         right: MediaQuery.of(context).size.width * 0.3,
         bottom: 12,
@@ -65,10 +61,6 @@ class ActionSnackBar {
             decoration: BoxDecoration(
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(10),
-              // border: Border.all(
-              //   width: 0.5,
-              //   color: Colors.grey
-              // ),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black12,

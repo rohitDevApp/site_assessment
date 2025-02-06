@@ -16,7 +16,7 @@ class FireBaseApi {
         .collection(collectionName)
         .where(field, isEqualTo: value)
         .get();
-    return querySnapshot.docs;
+    return  querySnapshot.docs;
   }
 
   //Get Data
@@ -27,10 +27,11 @@ class FireBaseApi {
   }
 
   //Update data by Field
-  static dynamic updateByField(String collectionName, dynamic data) async {
+  static dynamic updateByField(String collectionName, dynamic data ,String docId) async {
     var db = FirebaseFirestore.instance;
     var querySnapShot =
-        await db.collection(collectionName).doc("doc-id").update(data);
+        await db.collection(collectionName).doc(docId).update(data);
+    return querySnapShot;
   }
 
   //Update data by Field

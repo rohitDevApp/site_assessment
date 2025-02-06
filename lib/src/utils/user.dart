@@ -7,7 +7,8 @@ class CurrentUser {
     var userId = await SharedPreferencesHelper.getPrefValue(KEYS.userId) ?? '';
     var fullName = await SharedPreferencesHelper.getPrefValue(KEYS.fullName) ?? '';
     var role = await SharedPreferencesHelper.getPrefValue(KEYS.Role) ?? '';
-    return {'userId': userId, 'role': role, 'fullName': fullName};
+    var managerId = await SharedPreferencesHelper.getPrefValue(KEYS.managerId) ?? '';
+    return {'userId': userId, 'role': role, 'fullName': fullName , 'managerId': managerId};
   }
 
   //Remove User

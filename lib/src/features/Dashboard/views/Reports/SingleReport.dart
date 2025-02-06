@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:site_assessment/src/common_widgets/CustomText.dart';
+import 'package:site_assessment/src/common_widgets/common.dart';
 import 'package:site_assessment/src/constants/constants.dart';
 import 'package:site_assessment/src/features/Dashboard/views/Reports/ReportDto.dart';
 
-import 'CommentBox.dart';
+
 
 class SingleReport extends StatefulWidget {
   final ReportDto report;
@@ -17,66 +18,50 @@ class SingleReportState extends State<SingleReport> {
   late bool customIcon = false;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.all(1),
-        child: Card(
-            elevation: 4,
-            color: AppColors.mainColor,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            child: Theme(
-              data: Theme.of(context).copyWith(
-                dividerColor: Colors.transparent,
-              ),
-              child: ExpansionTile(
-                title: Text(
-                  "${widget.report.customerName} Report ",
-                  style: TextStyle(color: Colors.white),
+    return GestureDetector(
+      onTap: (){
+        Navigator.pushNamed(context, ROUTES.viewReport,arguments: widget.report);
+      },
+      child:  Container(
+          decoration: BoxDecoration(
+              border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                  ))),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 14, vertical: 3),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomText(widget.report.customerName, 16, FontWeight.bold,
+                        Colors.black54),
+                  ],
                 ),
-                trailing: Icon(
-                  customIcon
-                      ? Icons.arrow_drop_down_circle
-                      : Icons.arrow_drop_down,
-                  color: Colors.white,
+                SizeBox(9),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomText(widget.report.siteName, 14, FontWeight.bold,
+                        Colors.black54),
+                    CustomText(widget.report.submitReportDate, 14,
+                        FontWeight.bold, AppColors.mainColor),
+                  ],
                 ),
-                children: <Widget>[
-                  Divider(height: 3, color: Colors.white),
-                  Container(
-                    color: Colors.white,
-                    child:  Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          ReportField(
-                              "Customer Name : ${widget.report.customerName}"),
-                          ReportField("Site Name : ${widget.report.siteName}"),
-                          ReportField("Location : ${widget.report.location}"),
-                          ReportField(
-                              "Date of Visit: ${widget.report.dateOfVisit}"),
-                          ReportField(
-                              "Pump Capacity : ${widget.report.pumpCapacity} m³/h "),
-                          ReportField(
-                              "Pump Efficiency :${widget.report.pumpEfficiency} %"),
-                          ReportField(
-                              "Liquid Temperature :${widget.report.liquidTemperature} °C"),
-                          ReportField(
-                              "Electrical Power Consumption: ${widget.report.electricalPowerConsumption} Kw"),
-                          ReportField(
-                              "Installation Date : ${widget.report.installationDate}"),
-                          ReportField(
-                              "Last Service Date : ${widget.report.lastServiceDate}"),
-                          CommentBox(),
-                        ],
-                      ),
-                    ),
-                  )
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomText(widget.report.location, 14, FontWeight.bold,
+                        Colors.black54),
+                  ],
+                ),
+              ],
+            ),
+          )),
+    );
 
-                ],
-                onExpansionChanged: (bool expanded) {
-                  setState(() => customIcon = expanded);
-                },
-              ),
-            )));
   }
 }
 
@@ -88,12 +73,7 @@ class ReportField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: [
-        CustomText(value, 16, FontWeight.normal, Colors.black)
-      ],
+      children: [CustomText(value, 16, FontWeight.normal, Colors.black)],
     );
   }
 }
-
-
-

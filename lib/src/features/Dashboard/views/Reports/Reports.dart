@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:site_assessment/src/features/Dashboard/views/Reports/ManagerReports.dart';
-import 'package:site_assessment/src/features/Dashboard/views/Reports/OfficerReport.dart';
+import 'package:site_assessment/src/features/Dashboard/views/Reports/Manager/ManagerReports.dart';
 import '../../../../utils/user.dart';
+import 'Officer/OfficerReport.dart';
 
-class ReportsScreen extends StatefulWidget{
+class ReportsScreen extends StatefulWidget {
   const ReportsScreen({super.key});
 
   @override
@@ -11,30 +11,31 @@ class ReportsScreen extends StatefulWidget{
 }
 
 //ReportsState
-class ReportsState extends State<ReportsScreen>{
+class ReportsState extends State<ReportsScreen> {
+  var role;
+
   @override
   void initState() {
+    super.initState();
     getUserInfo();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child:Container(
-            padding: EdgeInsets.only(top: 25 ,right: 10,left: 10 ),
-            child: Stack(
-              children: [
-               ManagerReports(),
-                // OfficerReport(),
-              ],
-            ),
-          )
-          ),
+          child: Stack(
+            children: [
+              role == "Manager" ? ManagerReports() : OfficerReport(),
+            ],
+          )),
     );
   }
 
-  void getUserInfo() async{
+  void getUserInfo() async {
     var data = await CurrentUser.get();
-    print("$data data in Reports");
+    setState(() {
+      role = data['role'];
+    });
   }
 }
