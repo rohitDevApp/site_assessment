@@ -20,7 +20,7 @@ class SingleReportState extends State<SingleReport> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, ROUTES.viewReport,arguments: widget.report);
+        Navigator.pushNamed(context, DashRoutes.viewReport,arguments: widget.report);
       },
       child:  Container(
           decoration: BoxDecoration(

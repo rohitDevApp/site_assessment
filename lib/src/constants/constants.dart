@@ -23,7 +23,7 @@ class ROUTES {
   static String get teams =>'Teams';
   static String get resetPassword =>'ResetPassword';
   static String get editProfile =>'EditProfile';
-  static String get viewReport =>'ViewReport';
+
 }
 
 class DashRoutes{
@@ -33,6 +33,8 @@ class DashRoutes{
   static String get notification => "Notification";
   static String get setting => "Setting";
   static String get teams => "Teams";
+  static String get viewReport =>'ViewReport';
+  static String get addTask =>'addTask';
 }
 
 //Colors

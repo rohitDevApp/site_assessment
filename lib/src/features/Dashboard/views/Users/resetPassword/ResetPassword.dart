@@ -43,9 +43,9 @@ class ResetState extends State<ResetPassword> {
                     child: Column(
                       spacing: 12,
                       children: [
-                        InputFormField(email, "Old  Password"),
-                        Password(password, "New Password"),
-                        Password(password, "Confirm Password"),
+                        InputFormField(email, "Old  Password",Icons.lock_outline),
+                        Password(password, "New Password", Icons.lock_reset),
+                        Password(password, "Confirm Password", Icons.check_circle_outline),
                         isLoading
                             ? CircularProgressIndicator(
                                 valueColor:

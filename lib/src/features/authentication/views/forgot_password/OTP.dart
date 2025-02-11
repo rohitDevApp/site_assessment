@@ -29,29 +29,36 @@ class OtpState extends State<OTP> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-          child: Stack(
-        children: [
-          AuthHeader("OTP"),
-          Container(
-              margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.3,
-                  left: 20,
-                  right: 20),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    OtpHeader(),
-                    SizeBox(60),
-                    OtpArea(),
-                    SizeBox(30),
-                    NextWithIcon(passwordHandler)
-                  ],
-                ),
-              ))
-        ],
-      )),
+      body: SafeArea(
+          child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Stack(
+                        children: [
+                          Positioned(top: MediaQuery.of(context).size.height * 0.1,
+                              left: 0,
+                              right: 0,
+                              child: AuthHeader("OTP")),
+                          Container(
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.3,
+                    left: 0,
+                    right: 0),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      OtpHeader(),
+                      SizeBox(60),
+                      OtpArea(),
+                      SizeBox(30),
+                      NextWithIcon(passwordHandler)
+                    ],
+                  ),
+                ))
+                        ],
+                      ),
+              ))),
     );
   }
 }
@@ -79,23 +86,26 @@ class OtpHeader extends StatelessWidget {
 }
 
 //OTP Screen
-class OtpArea extends StatelessWidget{
+class OtpArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
           height: 68,
           width: 68,
           child: TextFormField(
-            onChanged: (value){
-              if(value.length==1){
+            onChanged: (value) {
+              if (value.length == 1) {
                 FocusScope.of(context).nextFocus();
               }
             },
             cursorColor: Colors.white,
-            style: Theme.of(context).textTheme.headlineLarge?.copyWith(color: Colors.white),
+            style: Theme.of(context)
+                .textTheme
+                .headlineLarge
+                ?.copyWith(color: Colors.white),
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
             decoration: InputDecoration(
@@ -117,19 +127,23 @@ class OtpArea extends StatelessWidget{
               FilteringTextInputFormatter.digitsOnly
             ],
           ),
-        ),SizedBox(
+        ),
+        SizedBox(
           height: 68,
           width: 68,
           child: TextFormField(
-            onChanged: (value){
-              if(value.length==1){
+            onChanged: (value) {
+              if (value.length == 1) {
                 FocusScope.of(context).nextFocus();
-              }else if(value.isEmpty){
+              } else if (value.isEmpty) {
                 FocusScope.of(context).previousFocus();
               }
             },
             cursorColor: Colors.white,
-            style: Theme.of(context).textTheme.headlineLarge?.copyWith(color: Colors.white),
+            style: Theme.of(context)
+                .textTheme
+                .headlineLarge
+                ?.copyWith(color: Colors.white),
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
             decoration: InputDecoration(
@@ -151,19 +165,23 @@ class OtpArea extends StatelessWidget{
               FilteringTextInputFormatter.digitsOnly
             ],
           ),
-        ),SizedBox(
+        ),
+        SizedBox(
           height: 68,
           width: 68,
           child: TextFormField(
-            onChanged: (value){
-              if(value.length==1){
+            onChanged: (value) {
+              if (value.length == 1) {
                 FocusScope.of(context).nextFocus();
-              }else if(value.isEmpty){
+              } else if (value.isEmpty) {
                 FocusScope.of(context).previousFocus();
               }
             },
             cursorColor: Colors.white,
-            style: Theme.of(context).textTheme.headlineLarge?.copyWith(color: Colors.white),
+            style: Theme.of(context)
+                .textTheme
+                .headlineLarge
+                ?.copyWith(color: Colors.white),
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
             decoration: InputDecoration(
@@ -185,19 +203,23 @@ class OtpArea extends StatelessWidget{
               FilteringTextInputFormatter.digitsOnly
             ],
           ),
-        ),SizedBox(
+        ),
+        SizedBox(
           height: 68,
           width: 68,
           child: TextFormField(
-            onChanged: (value){
-              if(value.length==1){
+            onChanged: (value) {
+              if (value.length == 1) {
                 FocusScope.of(context).nextFocus();
-              }else if(value.isEmpty){
+              } else if (value.isEmpty) {
                 FocusScope.of(context).previousFocus();
               }
             },
             cursorColor: Colors.white,
-            style: Theme.of(context).textTheme.headlineLarge?.copyWith(color: Colors.white),
+            style: Theme.of(context)
+                .textTheme
+                .headlineLarge
+                ?.copyWith(color: Colors.white),
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
             decoration: InputDecoration(
@@ -223,8 +245,4 @@ class OtpArea extends StatelessWidget{
       ],
     );
   }
-
 }
-
-
-

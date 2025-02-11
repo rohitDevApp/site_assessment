@@ -5,6 +5,8 @@ import 'package:site_assessment/src/common_widgets/common.dart';
 import 'package:site_assessment/src/constants/constants.dart';
 import 'package:site_assessment/src/constants/firebase.dart';
 import '../../../../common_widgets/SnackBar.dart';
+import '../../../../common_widgets/input/CustomFormInput.dart';
+import '../../../../common_widgets/input/CustomFormPassword.dart';
 import '../../../../common_widgets/password.dart';
 
 class SignUp extends StatefulWidget {
@@ -130,10 +132,10 @@ class SignUpState extends State<SignUp> {
                                     selectedIcon = icon;
                                   });
                                 }, isFormSubmitted),
-                                InputFormField(userNameController, "Full Name"),
-                                InputFormField(emailController, "Email"),
-                                Password(passwordController, "Password"),
-                                InputFormField(aboutController, "About"),
+                                CustomFormInput(userNameController, "Full Name",Icons.person_outline),
+                                CustomFormInput(emailController, "Email",Icons.email_outlined),
+                                CustomFormPassword(passwordController, "Password",Icons.lock_outline),
+                                CustomFormInput(aboutController, "About",Icons.info_outline),
                                 isLoading
                                     ? CircularProgressIndicator(
                                         valueColor: AlwaysStoppedAnimation(

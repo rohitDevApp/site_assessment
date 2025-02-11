@@ -14,15 +14,18 @@ class DateSelectorWithInput extends StatefulWidget {
 //State
 class DateSelectorWithInputState extends State<DateSelectorWithInput> {
   //check Range
-  bool _decideWhichDayToEnable(DateTime day) {
-    return day.isBefore(DateTime.now().add(Duration(days: 1)));
+  bool _decideWhichDayToEnable(DateTime date) {
+    DateTime today = DateTime.now();
+    return date.year > today.year ||
+        date.month > today.month ||
+        date.day >= today.day;
   }
 
   //Select modal for date
   _selectDate(BuildContext context) async {
     DateTime today = DateTime.now();
     DateTime minDate = DateTime(2000);
-    DateTime maxDate = today;
+    DateTime maxDate = DateTime(2050);
 
     DateTime initialDate = today.isBefore(maxDate) ? today : maxDate;
 

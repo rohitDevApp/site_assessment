@@ -63,9 +63,9 @@ class FormReportState extends State<FormOfReport> {
                     child: Column(
                       spacing: 12,
                       children: [
-                        InputFormField(customerController, "Customer Name"),
-                        InputFormField(siteNameController, "Site Name"),
-                        InputFormField(locationController, "Location"),
+                        InputFormField(customerController, "Customer Name",Icons.contact_page_outlined),
+                        InputFormField(siteNameController, "Site Name" ,Icons.business_outlined),
+                        InputFormField(locationController, "Location",Icons.location_on_outlined),
                       ],
                     ))
               ],

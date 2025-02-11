@@ -19,6 +19,16 @@ class FireBaseApi {
     return  querySnapshot.docs;
   }
 
+  //Get By Doc Id
+  static dynamic getByDocId(
+      String collectionName, String docId) async {
+    var db = FirebaseFirestore.instance;
+    var querySnapshot = await db
+        .collection(collectionName).doc(docId)
+        .get();
+    return  querySnapshot;
+  }
+
   //Get Data
   static dynamic get(String collectionName) async {
     var db = FirebaseFirestore.instance;
@@ -27,7 +37,7 @@ class FireBaseApi {
   }
 
   //Update data by Field
-  static dynamic updateByField(String collectionName, dynamic data ,String docId) async {
+  static dynamic updateByField(String collectionName, dynamic data ,String? docId) async {
     var db = FirebaseFirestore.instance;
     var querySnapShot =
         await db.collection(collectionName).doc(docId).update(data);

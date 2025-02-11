@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:site_assessment/src/api/firebaseApi.dart';
 import 'package:site_assessment/src/common_widgets/common.dart';
+import 'package:site_assessment/src/common_widgets/input/CustomFormInput.dart';
 import 'package:site_assessment/src/constants/constants.dart';
 import 'package:site_assessment/src/constants/firebase.dart';
 import 'package:site_assessment/src/utils/SharedPreferencesHelper.dart';
 
 import '../../../../common_widgets/SnackBar.dart';
-import '../../../../common_widgets/password.dart';
+import '../../../../common_widgets/input/CustomFormPassword.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,7 +18,6 @@ class LoginScreen extends StatefulWidget {
 
 //login State
 class _LoginState extends State<LoginScreen> {
-  final TextEditingController colorController = TextEditingController();
   final TextEditingController iconController = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
@@ -37,7 +37,6 @@ class _LoginState extends State<LoginScreen> {
         for (var doc in data) {
           Map<String, dynamic> data = doc.data();
           if (data['password'] == password && data['Role'] == role) {
-            try {
               await SharedPreferencesHelper.setPrefValue(
                   KEYS.fullName, data['fullName'].toString());
               await SharedPreferencesHelper.setPrefValue(
@@ -45,9 +44,6 @@ class _LoginState extends State<LoginScreen> {
               await SharedPreferencesHelper.setPrefValue(KEYS.isLogin, true);
               await SharedPreferencesHelper.setPrefValue(KEYS.userId, doc.id);
               return true;
-            } catch (err) {
-              print("Error From Shared  $err");
-            }
           } else {
             return false;
           }
@@ -64,10 +60,11 @@ class _LoginState extends State<LoginScreen> {
   }
 
   //handler login
-  handlerLogin() async {
+  handleLogin() async {
     setState(() {
       isFormSubmitted = true;
     });
+
     if (iconController.text == "") {
       return;
     }
@@ -75,10 +72,12 @@ class _LoginState extends State<LoginScreen> {
       isFormSubmitted = true;
       isLoading = true;
     });
+
     if (loginFormKey.currentState!.validate()) {
-      var userExits =
+      var userExists =
           await checkCredential(email.text, password.text, iconController.text);
-      if (userExits) {
+      if (!mounted) return;
+      if (userExists) {
         CustomSnackBar.show(context, 'Login Successfully');
         loginFormKey.currentState?.reset();
         email.clear();
@@ -111,26 +110,28 @@ class _LoginState extends State<LoginScreen> {
                   child: Form(
                       key: loginFormKey,
                       child: Column(
-                          spacing: 12,
                         children: [
                           DynamicMenu(iconController, (IconLabel? icon) {
                             setState(() {
                               selectedIcon = icon;
                             });
                           }, isFormSubmitted),
-                          InputFormField(email, "email"),
-                          Password(password, "password"),
+                          SizeBox(15),
+                          CustomFormInput(email, "Email", Icons.email_outlined),
+                          SizeBox(15),
+                          CustomFormPassword(password, "Password" , Icons.lock),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomTextButton("SignUp", "signUp"),
                                 CustomTextButton("Forgot Password", "email"),
                               ]),
+                          SizeBox(20),
                           isLoading
                               ? CircularProgressIndicator(
                               valueColor:
                               AlwaysStoppedAnimation(AppColors.mainColor))
-                              : NextWithIcon(() => handlerLogin()),
+                              : NextWithIcon(() => handleLogin()),
                         ],
                       ))),
             ],

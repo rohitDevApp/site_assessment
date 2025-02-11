@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:site_assessment/src/common_widgets/CustomText.dart';
 import 'package:site_assessment/src/common_widgets/RowText.dart';
 import 'package:site_assessment/src/common_widgets/common.dart';
 import 'package:site_assessment/src/constants/constants.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({super.key});
+  final Map<String,dynamic>? userData;
+   const Profile(this.userData,{super.key});
 
   @override
   Widget build(BuildContext context) {
+
+
     return SizedBox(
         child: ClipRRect(
       borderRadius: BorderRadius.only(
@@ -36,9 +38,9 @@ class Profile extends StatelessWidget {
               ],
             ),
             SizeBox(22),
-            RowText("Ronit", 18, FontWeight.bold, Colors.white),
-            RowText("rohit@centocode.com", 14, FontWeight.bold, Colors.white),
-            RowText("write a about", 14, FontWeight.bold, Colors.white),
+            RowText(userData?['fullName'] ?? "", 18, FontWeight.bold, Colors.white),
+            RowText(userData?['email'] ?? "", 14, FontWeight.bold, Colors.white),
+            RowText(userData?['about'] , 14, FontWeight.bold, Colors.white),
             SizeBox(22),
           ],
         ),

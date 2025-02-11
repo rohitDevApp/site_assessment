@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:site_assessment/src/api/firebaseApi.dart';
 import 'package:site_assessment/src/common_widgets/CustomText.dart';
+import 'package:site_assessment/src/common_widgets/search/CustomSearch.dart';
 import 'package:site_assessment/src/constants/firebase.dart';
 import 'package:site_assessment/src/features/Dashboard/views/Reports/ReportDto.dart';
 import '../../../../../common_widgets/Chips.dart';
@@ -35,37 +36,12 @@ class ManagerReportState extends State<ManagerReports> {
         child: SafeArea(
           child: Column(
             children: [
-              Padding(
-                padding: EdgeInsets.all(2.0),
-                child: SearchAnchor(
-                  builder: (BuildContext context, SearchController controller) {
-                    return SearchBar(
-                      controller: controller,
-                      hintText: "Search Report",
-                      padding: const WidgetStatePropertyAll<EdgeInsets>(
-                          EdgeInsets.symmetric(horizontal: 16.0)),
-                      onTap: () {
-                        controller.openView();
-                      },
-                      onChanged: (_) {
-                        controller.openView();
-                      },
-                      leading: const Icon(Icons.search),
-                    );
-                  },
-                  suggestionsBuilder:
-                      (BuildContext context, SearchController controller) {
-                    return arrReports.map((index) {
-                      return ListTile(
-                        title: Text(index.customerName),
-                        onTap: () {
-                          setState(() {
-                            controller.closeView(index.customerName);
-                          });
-                        },
-                      );
-                    });
-                  },
+              CustomSearch<ReportDto>(
+                "Search Report",
+                arrReports,
+               (report, controller) => ListTile(
+                  title: Text(report.customerName),
+                  onTap: () => controller.closeView(report.customerName),
                 ),
               ),
               Padding(

@@ -4,23 +4,32 @@ import 'package:site_assessment/src/api/firebaseApi.dart';
 import 'package:site_assessment/src/constants/firebase.dart';
 import 'package:site_assessment/src/features/Dashboard/views/Tasks/Manager/managerDto.dart';
 import 'package:site_assessment/src/utils/user.dart';
+import 'SingleTask.dart';
 
-import '../SingleTask.dart';
-
-class ManagerTask extends StatefulWidget {
-  const ManagerTask({super.key});
+class TaskView extends StatefulWidget {
+  final bool isManager;
+  final bool isRefresh;
+  const TaskView(this.isManager,this.isRefresh,{super.key});
 
   @override
-  State<StatefulWidget> createState() => ManagerState();
+  State<StatefulWidget> createState() => TaskViewState();
 }
 
-class ManagerState extends State<ManagerTask> {
+class TaskViewState extends State<TaskView> {
   final List<ManagerDto> arrManagerTasks = [];
 
   @override
   void initState() {
-    getManagerTask();
+    getAllTasks();
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant TaskView oldWidget) {
+   if(widget.isRefresh != oldWidget.isRefresh){
+     getAllTasks();
+   }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -29,7 +38,6 @@ class ManagerState extends State<ManagerTask> {
       body: Padding(
         padding: EdgeInsets.all(7),
         child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
                 child: ListView.builder(
@@ -38,7 +46,7 @@ class ManagerState extends State<ManagerTask> {
                       final task = arrManagerTasks[index];
                       return Column(
                         children: [
-                          SingleTask(task,true),
+                          SingleTask(task , widget.isManager),
                           Divider(
                             thickness: 0.6,
                           )
@@ -53,9 +61,10 @@ class ManagerState extends State<ManagerTask> {
   }
 
   //getManagerTask
-  Future<void> getManagerTask() async {
+  Future<void> getAllTasks() async {
     List<ManagerDto> tempManagerTasks = [];
-
+    arrManagerTasks.length=0;
+    print("call all task ");
     try{
       var userData = await CurrentUser.get();
       bool isManager = userData['role'] == "Manager";
@@ -63,10 +72,10 @@ class ManagerState extends State<ManagerTask> {
       for(var task in allTask){
         DateTime taskDate = DateFormat("d/M/yyyy").parse(task['taskDate']);
         tempManagerTasks
-            .add(ManagerDto(task['taskName'], task.id, "Pending", taskDate , task['officerName'],''));
+            .add(ManagerDto(task['taskName'], task.id, "Pending", taskDate , task['officerName'],task['action']));
       }
     }catch(err){
-      print("err when fetch data from the task collection");
+      print("err when fetch data from the task collection $err");
     }
     setState(() {
       arrManagerTasks.addAll(tempManagerTasks);

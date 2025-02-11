@@ -31,6 +31,7 @@ class HomeState extends State<HomeScreen> {
   @override
   void initState() {
     getUserInfo();
+    super.initState();
   }
 
   @override

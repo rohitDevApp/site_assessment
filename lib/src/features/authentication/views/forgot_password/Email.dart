@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:site_assessment/src/common_widgets/common.dart';
 import 'package:site_assessment/src/common_widgets/layout/ScreenLayout.dart';
 import '../../../../common_widgets/SnackBar.dart';
+import '../../../../common_widgets/input/CustomFormInput.dart';
 import '../../../../constants/constants.dart';
 
 class Email extends StatefulWidget {
@@ -51,7 +52,7 @@ class EmailState extends State<Email> {
                 child: Column(
                   spacing: 12,
                   children: [
-                    InputFormField(email, 'Email'),
+                    CustomFormInput(email, 'Email',Icons.email),
                     isLoading
                         ? CircularProgressIndicator(
                             valueColor:

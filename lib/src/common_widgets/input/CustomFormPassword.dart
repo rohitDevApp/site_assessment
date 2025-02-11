@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:site_assessment/src/constants/constants.dart';
 
-import '../constants/constants.dart';
-import 'CustomText.dart';
+import '../CustomText.dart';
 
-class Password extends StatefulWidget {
+class CustomFormPassword extends StatefulWidget {
   final TextEditingController _controller;
   final TextEditingController? confirmController;
   final String hintText;
@@ -11,24 +11,41 @@ class Password extends StatefulWidget {
   final IconData? icon;
 
   //Constructor
-  const Password(
+  const CustomFormPassword(
     this._controller,
-    this.hintText,  this.icon, {
+    this.hintText,
+    this.icon, {
     super.key,
     this.confirmController,
-
     this.obscureText = true,
   });
   @override
-  State<StatefulWidget> createState() => PasswordState();
+  State<StatefulWidget> createState() => CustomFormPasswordState();
 }
 
 //State
-class PasswordState extends State<Password> {
+class CustomFormPasswordState extends State<CustomFormPassword> {
   bool obscureText = true;
+  late FocusNode _focusNode;
+
+  @override
+  void initState() {
+    _focusNode = FocusNode();
+    _focusNode.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool isFocused = _focusNode.hasFocus;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 6,
@@ -37,8 +54,12 @@ class PasswordState extends State<Password> {
         TextFormField(
           obscureText: obscureText,
           controller: widget._controller,
+          focusNode: _focusNode,
           decoration: InputDecoration(
-            prefixIcon: Icon(widget.icon ,color: Colors.black54,),
+            prefixIcon: Icon(
+              widget.icon,
+              color: isFocused ? AppColors.mainColor:Colors.black54,
+            ),
             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 12),
             // hintText: hintText,
             fillColor: Colors.white,

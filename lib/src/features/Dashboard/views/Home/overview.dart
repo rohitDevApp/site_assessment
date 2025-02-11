@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:site_assessment/src/common_widgets/CustomText.dart';
 import '../../../../common_widgets/common.dart';
-import '../../../../constants/constants.dart';
 import 'RowWithBox.dart';
 
 class Overview extends StatelessWidget {

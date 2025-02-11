@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:site_assessment/src/common_widgets/CustomText.dart';
 import 'package:site_assessment/src/common_widgets/RowText.dart';
-import 'package:site_assessment/src/constants/constants.dart';
 
 class RowWithBox extends StatelessWidget {
   final String title1;

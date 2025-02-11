@@ -87,12 +87,14 @@ class NextWithIcon extends StatelessWidget {
 class InputFormField extends StatelessWidget {
   final TextEditingController _controller;
   final String hintText;
+  final IconData? icon;
 
   //Constructor
-  const InputFormField(this._controller, this.hintText, {super.key});
+  const InputFormField(this._controller, this.hintText, this.icon,{super.key});
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 6,
@@ -101,6 +103,7 @@ class InputFormField extends StatelessWidget {
         TextFormField(
           controller: _controller,
           decoration: InputDecoration(
+            prefixIcon: Icon(icon ,color: Colors.black54,),
               contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 12),
               // hintText: hintText,
               fillColor: Colors.white,
@@ -172,7 +175,7 @@ class DynamicMenu extends StatefulWidget {
   final Function(IconLabel?) onSelected;
   final bool isFormSubmitted;
 
-  DynamicMenu(this.iconController, this.onSelected, this.isFormSubmitted);
+  const DynamicMenu(this.iconController, this.onSelected, this.isFormSubmitted, {super.key});
 
   @override
   State<StatefulWidget> createState() => DynamicMenuState();

@@ -13,7 +13,7 @@ class ViewReport extends StatelessWidget {
   Widget build(BuildContext context) {
     final ReportDto report =
         ModalRoute.of(context)!.settings.arguments as ReportDto;
-    print(report.reportId);
+
     return Scaffold(
       appBar: AppBar(
         title: CustomText("View Report", 18, FontWeight.bold, Colors.black54),
