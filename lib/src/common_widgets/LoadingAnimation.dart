@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class LoadingAnimation extends StatefulWidget {
-  const LoadingAnimation({super.key});
+  final String animationText;
+  final IconData? icon;
+  const LoadingAnimation(this.animationText,this.icon,{super.key});
 
   @override
   LoadingAnimationState createState() => LoadingAnimationState();
@@ -85,15 +87,15 @@ class LoadingAnimationState extends State<LoadingAnimation>
                       ],
                     ),
                     child: Icon(
-                      Icons.sync,
+                      widget.icon,
                       size: 70,
                       color: Colors.blue,
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  "Checking...",
+                 Text(
+                  widget.animationText,
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,

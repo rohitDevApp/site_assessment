@@ -7,7 +7,6 @@ import 'package:site_assessment/src/constants/firebase.dart';
 import '../../../../common_widgets/SnackBar.dart';
 import '../../../../common_widgets/input/CustomFormInput.dart';
 import '../../../../common_widgets/input/CustomFormPassword.dart';
-import '../../../../common_widgets/password.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -30,8 +29,7 @@ class SignUpState extends State<SignUp> {
   bool isFormSubmitted = false;
   bool isLoading = false;
   var db = FirebaseFirestore.instance;
-  List<String> attachments = [];
-  bool isHTML = false;
+
 
   //check user already Register
   Future<bool> getUserByEmail(String email) async {
@@ -73,6 +71,7 @@ class SignUpState extends State<SignUp> {
         "password": passwordController.text,
         "Role": iconController.text,
         "about": aboutController.text,
+        "active":true,
       };
       setState(() {
         isLoading = false;

@@ -6,8 +6,9 @@ import '../CustomText.dart';
 class CustomFormInput extends StatefulWidget{
   final TextEditingController _controller;
   final String hintText;
+  final bool isEnable;
   final IconData? icon;
-  const CustomFormInput(this._controller, this.hintText, this.icon,{super.key});
+  const CustomFormInput(this._controller, this.hintText, this.icon,{ this.isEnable=true,super.key});
 
   @override
   State<StatefulWidget> createState() =>CustomFormInputState();
@@ -39,6 +40,7 @@ class CustomFormInputState extends State<CustomFormInput>{
       children: [
         CustomText(widget.hintText, 15, FontWeight.bold, Colors.black54),
         TextFormField(
+          enabled: widget.isEnable,
           controller: widget._controller,
           focusNode: _focusNode,
           decoration: InputDecoration(

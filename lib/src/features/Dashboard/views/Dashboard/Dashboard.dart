@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:site_assessment/src/constants/constants.dart';
-import 'package:site_assessment/src/features/Dashboard/views/Commons/Dashboard/tabs.dart';
+import 'package:site_assessment/src/features/Dashboard/views/Dashboard/tabs.dart';
 import 'package:site_assessment/src/features/Dashboard/views/Home/Home.dart';
-import 'package:site_assessment/src/features/Dashboard/views/Commons/Notification/Notifications.dart';
 import 'package:site_assessment/src/features/Dashboard/views/Reports/Reports.dart';
 import 'package:site_assessment/src/features/Dashboard/views/Users/Settings/Settings.dart';
 import 'package:site_assessment/src/features/Dashboard/views/Tasks/TaskScreen.dart';
 
-import '../../Manager/Teams/Teams.dart';
+import '../Manager/Teams/Teams.dart';
 import 'Drawer.dart';
 
 

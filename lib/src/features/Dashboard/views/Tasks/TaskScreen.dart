@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:site_assessment/src/common_widgets/CustomText.dart';
 
 import '../../../../constants/constants.dart';
-import '../../../../utils/user.dart';
-import 'TaskView.dart';
+import '../../Provider/user/user_provider.dart';
+import 'ShowTasks.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -13,24 +14,27 @@ class TaskScreen extends StatefulWidget {
 
 //TaskState
 class TaskState extends State<TaskScreen> {
-  bool isManager = false;
-  bool isRefresh = false;
 
   @override
   void initState() {
-    getRole();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
         title: Padding(
           padding: EdgeInsets.only(top: 10),
-          child: CustomText(isManager ? "Manager Tasks " : "Officer Tasks ", 18,
-              FontWeight.bold, AppColors.mainColor),
+          child: CustomText(
+              userProvider.userData!['role'] == "Manager"
+                  ? "Manager Tasks "
+                  : "Officer Tasks ",
+              18,
+              FontWeight.bold,
+              AppColors.mainColor),
         ),
         backgroundColor: AppColors.lightBlue,
         leading: Padding(
@@ -44,54 +48,31 @@ class TaskState extends State<TaskScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            TaskView(isManager,isRefresh),
-            isManager
+            ShowTasks(),
+            userProvider.userData!['role'] == "Manager"
                 ? Positioned(
                     bottom: 20,
                     right: 20,
-                    child: ElevatedButton(
+                    child: SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(0),
                             backgroundColor: AppColors.mainColor),
                         onPressed: () =>
-                            Navigator.pushNamed(context, DashRoutes.addTask)
-                                .then((result) {
-                                  print("result is $result");
-                                      if (result == true) {setState(() {
-                                        isRefresh=!isRefresh;
-                                      });}
-                                    }),
-                        child: Row(
-                          spacing: 8,
-                          children: [
-                            Icon(
-                              Icons.add,
-                              size: 20,
-                              color: Colors.white,
-                            ),
-                            CustomText("Add", 15, FontWeight.bold, Colors.white)
-                          ],
-                        )))
+                            Navigator.pushNamed(context, DashRoutes.addTask),
+                        child: Icon(
+                          Icons.add,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ))
                 : Container(),
           ],
         ),
       ),
     );
-  }
-
-  //getRole
-  Future<void> getRole() async {
-    try {
-      var userData = await CurrentUser.get();
-      var role = userData['role'];
-      setState(() {
-        if (role == "Manager") {
-          isManager = true;
-        } else {
-          isManager = false;
-        }
-      });
-    } catch (err) {
-      print("err when fetch data from the task collection");
-    }
   }
 }

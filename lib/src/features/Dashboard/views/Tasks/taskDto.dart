@@ -1,4 +1,4 @@
-class ManagerDto {
+class TaskDto {
   final String taskId;
   final String taskName;
   final String taskStatus;
@@ -6,5 +6,5 @@ class ManagerDto {
   final String taskAssignOfficer;
   final DateTime taskDate;
 
-  ManagerDto(this.taskName, this.taskId, this.taskStatus, this.taskDate, this.taskAssignOfficer, this.taskAction);
+  TaskDto(this.taskName, this.taskId, this.taskStatus, this.taskDate, this.taskAssignOfficer, this.taskAction);
 }

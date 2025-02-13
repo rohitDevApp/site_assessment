@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:site_assessment/src/constants/constants.dart';
+import 'package:site_assessment/src/features/Dashboard/views/Tasks/officer/ViewTask.dart';
+import '../features/Dashboard/views/Dashboard/Dashboard.dart';
 import '../features/Dashboard/views/Reports/Manager/ViewReport.dart';
 import '../features/Dashboard/views/Tasks/Manager/AddTaskScreen.dart';
+import '../features/authentication/views/login/loginScreen.dart';
 import '../features/authentication/views/splash_screen/SplashScreenWithAnimation.dart';
-import 'package:site_assessment/src/features/Dashboard/views/Commons/Dashboard/Dashboard.dart';
 import 'package:site_assessment/src/features/Dashboard/views/Manager/Teams/Teams.dart';
 import 'package:site_assessment/src/features/Dashboard/views/Users/profile/EditProfile.dart';
 import 'package:site_assessment/src/features/Dashboard/views/Users/resetPassword/ResetPassword.dart';
-import 'package:site_assessment/src/features/authentication/views/login/login.dart';
 import 'package:site_assessment/src/features/authentication/views/forgot_password/Email.dart';
 import 'package:site_assessment/src/features/authentication/views/forgot_password/OTP.dart';
 import 'package:site_assessment/src/features/authentication/views/forgot_password/Password.dart';
@@ -28,5 +29,6 @@ class AppRoutes {
     ROUTES.editProfile:(context)=>EditProfile(),
     DashRoutes.viewReport:(context)=>ViewReport(),
     DashRoutes.addTask:(context)=>AddTaskScreen(),
+    DashRoutes.viewTask:(context)=>ViewTask(),
   };
 }

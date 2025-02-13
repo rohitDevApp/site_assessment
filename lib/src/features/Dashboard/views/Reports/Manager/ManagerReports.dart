@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:site_assessment/src/api/firebaseApi.dart';
 import 'package:site_assessment/src/common_widgets/CustomText.dart';
-import 'package:site_assessment/src/common_widgets/search/CustomSearch.dart';
 import 'package:site_assessment/src/constants/firebase.dart';
 import 'package:site_assessment/src/features/Dashboard/views/Reports/ReportDto.dart';
-import '../../../../../common_widgets/Chips.dart';
+import '../../../../../constants/constants.dart';
 import '../SingleReport.dart';
 
 class ManagerReports extends StatefulWidget {
@@ -28,32 +27,44 @@ class ManagerReportState extends State<ManagerReports> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: CustomText("Reports", 18, FontWeight.bold, Colors.black54),
-        backgroundColor: Colors.blue.shade50,
+        titleSpacing: 0,
+        title: Padding(
+          padding: EdgeInsets.only(top: 10),
+          child: CustomText( "Reports ", 18,
+              FontWeight.bold, AppColors.mainColor),
+        ),
+        backgroundColor: AppColors.lightBlue,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 20, top: 10),
+          child: Icon(
+            Icons.menu_book_outlined,
+            color: AppColors.mainColor,
+          ),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.all(8.0),
         child: SafeArea(
           child: Column(
             children: [
-              CustomSearch<ReportDto>(
-                "Search Report",
-                arrReports,
-               (report, controller) => ListTile(
-                  title: Text(report.customerName),
-                  onTap: () => controller.closeView(report.customerName),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 2,
-                ),
-                child: Row(
-                  children: [
-                    Chips(),
-                  ],
-                ),
-              ),
+              // CustomSearch<ReportDto>(
+              //   "Search Report",
+              //   arrReports,
+              //  (report, controller) => ListTile(
+              //     title: Text(report.customerName),
+              //     onTap: () => controller.closeView(report.customerName),
+              //   ),
+              // ),
+              // Padding(
+              //   padding: EdgeInsets.only(
+              //     top: 2,
+              //   ),
+              //   child: Row(
+              //     children: [
+              //       Chips(),
+              //     ],
+              //   ),
+              // ),
               Expanded(
                 child: ListView.builder(
                   itemCount: arrReports.length,

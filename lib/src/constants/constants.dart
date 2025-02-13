@@ -35,6 +35,7 @@ class DashRoutes{
   static String get teams => "Teams";
   static String get viewReport =>'ViewReport';
   static String get addTask =>'addTask';
+  static String get viewTask =>'viewTask';
 }
 
 //Colors

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:site_assessment/src/api/firebaseApi.dart';
+import 'package:provider/provider.dart';
 import 'package:site_assessment/src/common_widgets/CustomText.dart';
-import 'package:site_assessment/src/constants/firebase.dart';
-import 'package:site_assessment/src/features/Dashboard/views/Commons/Dashboard/drawerDto.dart';
+import 'package:site_assessment/src/features/Dashboard/Provider/user/user_provider.dart';
 import 'package:site_assessment/src/features/Dashboard/views/Users/Status/UserStatus.dart';
 
-import '../../../../../constants/constants.dart';
-import '../../../../../utils/user.dart';
-import 'Profile.dart';
+import '../../../../constants/constants.dart';
+import '../../../../utils/user.dart';
+import '../Users/profile/Profile.dart';
+import 'drawerDto.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -16,56 +16,25 @@ class CustomDrawer extends StatefulWidget {
   State<StatefulWidget> createState() => CustomerState();
 }
 
-class CustomerState extends State<CustomDrawer>
-    with SingleTickerProviderStateMixin {
-  Map<String, dynamic>? userData;
-  String? userId;
-  late AnimationController controller;
-  late Animation<double> animation;
+class CustomerState extends State<CustomDrawer> {
 
   @override
   void initState() {
     super.initState();
-    getUserInfo();
-    // Setup animation for loading effect
-    controller =
-        AnimationController(duration: const Duration(seconds: 2), vsync: this)
-          ..repeat(reverse: true);
-    animation = Tween<double>(begin: 0.5, end: 1.0).animate(controller);
   }
 
   @override
   void dispose() {
-    controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (userData == null) {
-      // Show animated loading effect while userData is null
-      return Drawer(
-        child: Center(
-          child: FadeTransition(
-            opacity: animation,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 10),
-                CustomText("Loading profile ...", 16, FontWeight.bold, AppColors.mainColor),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-    
-    bool isManager = userData?['Role'] == "Manager";
+      final userProvider = Provider.of<UserProvider>(context);
 
     final List<DrawerDto> arrDrawerOption = [
       DrawerDto(label: "Profile", icon: Icons.account_circle),
-      if (isManager) DrawerDto(label: "Teams", icon: Icons.contact_mail),
+      if (userProvider.userData!['role']== "Manager") DrawerDto(label: "Teams", icon: Icons.contact_mail),
       DrawerDto(label: "Reset Password ", icon: Icons.lock),
       DrawerDto(label: "Edit Profile ", icon: Icons.perm_contact_cal),
       DrawerDto(label: "Online", icon: Icons.add_reaction),
@@ -88,7 +57,7 @@ class CustomerState extends State<CustomDrawer>
       };
 
       //Select Role Routes
-      Map<int, String> routes = isManager ? managerRoutes : userRoutes;
+      Map<int, String> routes = (userProvider.userData!['role']== "Manager") ? managerRoutes : userRoutes;
       if (routes.containsKey(index)) {
         Navigator.pushNamed(context, routes[index]!);
       }
@@ -106,7 +75,7 @@ class CustomerState extends State<CustomDrawer>
           if (index == 0) {
             return Padding(
               padding: EdgeInsets.only(bottom: 40),
-              child: Profile(userData),
+              child: Profile(),
             );
           } else if (index == arrDrawerOption.length - 1) {
             return Stack(
@@ -143,7 +112,7 @@ class CustomerState extends State<CustomDrawer>
                       child: CustomText(
                           option.label, 16, FontWeight.normal, Colors.black),
                     ),
-                    if (option.label == "Online") UserStatus(userId,userData?['status'])
+                    if (option.label == "Online") UserStatus()
                   ],
                 ),
               ),
@@ -155,18 +124,4 @@ class CustomerState extends State<CustomDrawer>
     );
   }
 
-  void getUserInfo() async {
-    try {
-      var data = await CurrentUser.get();
-      var doc = await FireBaseApi.getByDocId(
-          FireBaseConstant.usersCollection, data['userId']);
-      setState(() {
-        userData = doc.data();
-        userId = doc.id;
-      });
-      print(userData?['status']);
-    } catch (err) {
-      print("$err when Drawer profile get");
-    }
-  }
 }

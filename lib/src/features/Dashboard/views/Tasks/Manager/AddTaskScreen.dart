@@ -35,7 +35,23 @@ class AddTaskState extends State<AddTaskScreen> {
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Stack(
             children: [
-              TaskForm()
+              Positioned(
+                  top: MediaQuery.of(context).size.height * 0.05,
+                  left: 0,
+                  right: 0,
+                  child: CircleAvatar(
+                    radius: 50,
+                    child: Icon(
+                      Icons.task_alt,
+                      color: AppColors.mainColor,
+                      size: 62,
+                    ),
+                  )), Positioned(
+                  top: MediaQuery.of(context).size.height * 0.15,
+                  left: 0,
+                  right: 0,
+                  child: TaskForm()),
+
             ],
           ),
         )));

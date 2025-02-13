@@ -5,23 +5,27 @@ class CustomButton extends StatelessWidget {
   final Color bg;
   final double padding;
   final VoidCallback onPressed;
+  final double width;
 
   //Constructor
-  const CustomButton(this.text, this.onPressed, this.bg,this.padding, {super.key});
+  const CustomButton(this.text, this.onPressed, this.bg,this.padding,this.width, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        style: ElevatedButton.styleFrom(backgroundColor: bg),
-        onPressed: onPressed,
-        child: Padding(padding: EdgeInsets.symmetric(horizontal: padding,vertical: 2),child: Text(
-          text,
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            decorationColor: Colors.black54,
-          ),
-        ),));
+    return SizedBox(
+      width: width,
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(backgroundColor: bg),
+          onPressed: onPressed,
+          child: Padding(padding: EdgeInsets.symmetric(horizontal: padding,vertical: 2),child: Text(
+            text,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              decorationColor: Colors.black54,
+            ),
+          ),)),
+    );
   }
 }

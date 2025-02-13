@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:site_assessment/src/api/firebaseApi.dart';
 import 'package:site_assessment/src/constants/constants.dart';
 import 'package:site_assessment/src/constants/firebase.dart';
-import 'package:site_assessment/src/features/Dashboard/views/Tasks/TaskView.dart';
+import 'package:site_assessment/src/features/Dashboard/views/Tasks/ShowTasks.dart';
 import 'package:site_assessment/src/utils/user.dart';
 
 import '../../../../../common_widgets/DateSelectorWithInput.dart';
@@ -78,7 +78,7 @@ class TaskFormState extends State<TaskForm> {
                             });
                             handlerTask();
                           }
-                        }, AppColors.mainColor, 30)
+                        }, AppColors.mainColor, 30,MediaQuery.of(context).size.width * 0.4)
                 ],
               )
             ],

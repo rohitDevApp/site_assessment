@@ -1,14 +1,11 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:site_assessment/src/api/firebaseApi.dart';
+import 'package:provider/provider.dart';
 import 'package:site_assessment/src/constants/constants.dart';
-import 'package:site_assessment/src/constants/firebase.dart';
+
+import '../../../Provider/user/user_provider.dart';
 
 class UserStatus extends StatefulWidget {
-  final String? userId;
-  final bool? status;
-  const UserStatus(this.userId,this.status, {super.key});
+  const UserStatus( {super.key});
 
   @override
   State<StatefulWidget> createState() => UserStatusState();
@@ -16,35 +13,20 @@ class UserStatus extends StatefulWidget {
 
 //userStatus
 class UserStatusState extends State<UserStatus> {
-  bool isActive = true;
 
   @override
   void initState() {
-    setState(() {
-      isActive=widget.status!;
-    });
     super.initState();
+
   }
   @override
   Widget build(BuildContext context) {
-    return Switch(
-      value: isActive,
+    return Consumer<UserProvider>(builder: (context,userProvider,child) =>Switch(
+      value: userProvider.isActive,
       activeColor: AppColors.mainColor,
       onChanged: (value) {
-        setState(() {
-          isActive = value;
-          setUserStatus();
-        });
+        userProvider.setUserField(userProvider.userData!['userId'],{"status": true,});
       },
-    );
-  }
-
-  Future<void> setUserStatus() async {
-    try {
-      await FireBaseApi.updateByField(FireBaseConstant.usersCollection,
-          {"status": isActive}, widget.userId);
-    } catch (err) {
-      print(err);
-    }
+    ));
   }
 }

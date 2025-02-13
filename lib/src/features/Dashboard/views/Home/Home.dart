@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:site_assessment/src/common_widgets/common.dart';
 import 'package:site_assessment/src/constants/constants.dart';
-import 'package:site_assessment/src/utils/user.dart';
+import 'package:site_assessment/src/features/Dashboard/Provider/user/user_provider.dart';
 
+import '../../../../common_widgets/LoadingAnimation.dart';
 import 'HomeHeader.dart';
 import 'TaskReport.dart';
 import 'overview.dart';
@@ -16,26 +18,19 @@ class HomeScreen extends StatefulWidget {
 
 //HomeState
 class HomeState extends State<HomeScreen> {
-  String role = "No Role";
-  String fullName = "NA";
 
-  //getUserInfo
-  void getUserInfo() async {
-    var data = await CurrentUser.get();
-    setState(() {
-      role = data['role'] ?? 'No Role';
-      fullName = data['fullName'] ?? 'NA';
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask((){
+      Provider.of<UserProvider>(context,listen: false).fetchUserData();
     });
   }
 
   @override
-  void initState() {
-    getUserInfo();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    if(userProvider.userData == null) return LoadingAnimation("Home Loading ...",Icons.account_circle);
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -44,7 +39,7 @@ class HomeState extends State<HomeScreen> {
         height: MediaQuery.of(context).size.height,
         child: Stack(
           children: [
-            HomeHeader(role, fullName),
+            HomeHeader(userProvider.userData?['role'] ?? "NA",  userProvider.userData?['fullName'] ?? "NA",),
             Positioned(
                 top: MediaQuery.of(context).size.height * 0.22,
                 bottom: 0,
